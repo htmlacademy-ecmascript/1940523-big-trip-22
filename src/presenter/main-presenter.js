@@ -11,8 +11,10 @@ export default class MainPresenter {
   sortComponent = new ListSortView();
   tripListComponent = new TripListView();
 
-  constructor({ tripContainer }) {
+  constructor({ tripContainer, destinationModel }) {
     this.tripContainer = tripContainer;
+    this.destinationModel = destinationModel;
+    console.log(this.destinationModel);
   }
 
   init() {
