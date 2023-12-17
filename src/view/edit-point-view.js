@@ -1,4 +1,4 @@
-import { createElement } from '../render.js';
+import {createElement} from '../render.js';
 import {DESCRIPTIONS, EVENT_TYPES, MAX_PRICE_VALUE} from '../constants.js';
 import {getElementByKey, getRandomArrayElement, getRandomBool, getRandomNumber} from '../utils';
 
@@ -20,8 +20,10 @@ function createEventType(eventTypes) {
 
 function createOfferItems(offers) {
   return offers.map((offer) => {
+    const checked = getRandomBool() ? 'checked' : '';
+
     return `<div class="event__offer-selector">
-                  <input class="event__offer-checkbox  visually-hidden" id="event-offer-${offer.id}-1" type="checkbox" name="event-offer-${offer.id}" ${getRandomBool() ? 'checked' : ''}>
+                  <input class="event__offer-checkbox  visually-hidden" id="event-offer-${offer.id}-1" type="checkbox" name="event-offer-${offer.id}" ${checked}>
                   <label class="event__offer-label" for="event-offer-${offer.id}-1">
                     <span class="event__offer-title">${offer.title}</span>
                     &plus;&euro;&nbsp;
@@ -32,7 +34,7 @@ function createOfferItems(offers) {
 }
 
 function createEditFormTemplate(destinations, offers) {
-  const { name } = destinations[0];
+  const {name} = destinations[0];
   const currentEvent = 'Flight';
   const currentEventType = currentEvent.toLowerCase();
   const dateFrom = new Date().toLocaleString('en-US', {
