@@ -1,7 +1,6 @@
-export const START_ID_COUNTER = 1;
 export const MAX_IMAGES_COUNT = 5;
-export const MAX_OFFERS_COUNT = 5;
 export const MAX_PRICE_VALUE = 1500;
+export const MAX_PRICE_OFFER = 69;
 export const DATE_FORMAT = 'MMM D';
 export const TIME_FORMAT = 'HH:mm';
 export const DATE_TIME_FORMAT = 'DD/MM/YY HH:mm';
@@ -11,6 +10,11 @@ export const HOURS_FORMAT = 'HH[H] mm[M]';
 export const FULL_DATE_FORMAT = 'DD[D] HH[H] mm[M]';
 export const HOURS_IN_DAY = 24;
 export const SEC_IN_MINUTES = 100;
+
+export const OFFERS_COUNT = {
+  MIN: 1,
+  MAX: 5
+};
 
 export const EVENT_TYPES = [
   'taxi',
@@ -35,6 +39,17 @@ export const DESCRIPTIONS = [
   'Sed blandit, eros vel aliquam faucibus, purus ex euismod diam, eu luctus nunc ante ut dui.',
 ];
 
+export const Price = {
+  MIN: 1,
+  MAX: 666
+};
+
+export const Duration = {
+  HOUR: 6,
+  DAY: 5,
+  MINUTE: 24
+};
+
 export const CITIES = [
   'Istanbul',
   'London',
@@ -53,19 +68,4 @@ export const OFFERS_TITLES = [
   'Add meal',
   'Choose seats',
   'Travel by train'
-];
-
-export const MONTHS = [
-  '01',
-  '02',
-  '03',
-  '04',
-  '05',
-  '06',
-  '07',
-  '08',
-  '09',
-  '10',
-  '11',
-  '12',
 ];

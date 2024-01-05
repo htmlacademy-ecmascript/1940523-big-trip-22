@@ -1,6 +1,6 @@
-import {createElement} from '../render.js';
+import AbstractView from '../framework/view/abstract-view.js';
 import {DESCRIPTIONS, EVENT_TYPES, MAX_PRICE_VALUE} from '../constants.js';
-import {getElementByKey, getRandomArrayElement, getRandomBool, getRandomNumber} from '../utils';
+import {getRandomArrayElement, getRandomBool, getRandomNumber} from '../utils';
 
 function createDestinationOption(destination) {
   return `
@@ -18,25 +18,38 @@ function createEventType(eventTypes) {
   }).join('');
 }
 
-function createOfferItems(offers) {
-  return offers.map((offer) => {
-    const checked = getRandomBool() ? 'checked' : '';
+function createOfferItems(offer) {
+  const {id, title, price} = offer;
+  const checked = getRandomBool() ? 'checked' : '';
 
-    return `<div class="event__offer-selector">
-                  <input class="event__offer-checkbox  visually-hidden" id="event-offer-${offer.id}-1" type="checkbox" name="event-offer-${offer.id}" ${checked}>
-                  <label class="event__offer-label" for="event-offer-${offer.id}-1">
-                    <span class="event__offer-title">${offer.title}</span>
+  return `<div class="event__offer-selector">
+                  <input class="event__offer-checkbox  visually-hidden" id="event-offer-${id}-1" type="checkbox" name="event-offer-${id}" ${checked}>
+                  <label class="event__offer-label" for="event-offer-${id}-1">
+                    <span class="event__offer-title">${title}</span>
                     &plus;&euro;&nbsp;
-                    <span class="event__offer-price">${offer.price}</span>
+                    <span class="event__offer-price">${price}</span>
                   </label>
                 </div>`;
-  }).join('');
+}
+
+function createOfferItemsList ({offers}) {
+  if (offers.length !== 0) {
+    return `<section class="event__section  event__section--offers">
+              <h3 class="event__section-title  event__section-title--offers">Offers</h3>
+
+              <div class="event__available-offers">
+
+                 ${offers.map((offer) => createOfferItems(offer)).join('')}
+
+              </div>
+            </section>`;
+  }
 }
 
 function createEditFormTemplate(destinations, offers) {
+
   const {name} = destinations[0];
   const currentEvent = 'Flight';
-  const currentEventType = currentEvent.toLowerCase();
   const dateFrom = new Date().toLocaleString('en-US', {
     dateStyle: 'short',
     timeStyle: 'short',
@@ -105,15 +118,8 @@ function createEditFormTemplate(destinations, offers) {
             </button>
           </header>
           <section class="event__details">
-            <section class="event__section  event__section--offers">
-              <h3 class="event__section-title  event__section-title--offers">Offers</h3>
 
-              <div class="event__available-offers">
-
-                ${createOfferItems(getElementByKey(offers, currentEventType))}
-
-              </div>
-            </section>
+            ${createOfferItemsList(offers)}
 
             <section class="event__section  event__section--destination">
               <h3 class="event__section-title  event__section-title--destination">Destination</h3>
@@ -125,25 +131,23 @@ function createEditFormTemplate(destinations, offers) {
   );
 }
 
-export default class EditPointView {
-  constructor({destinations, offers}) {
-    this.destinations = destinations;
-    this.offers = offers;
+export default class EditPointView extends AbstractView {
+  #destinations = null;
+  #offers = null;
+  #onCloseClick = null;
+  #onSaveEdit = null;
+
+  constructor({destinations, offers, onCloseClick, onSaveEdit}) {
+    super();
+    this.#destinations = destinations;
+    this.#offers = offers;
+    this.#onCloseClick = onCloseClick;
+    this.element.querySelector('.event__rollup-btn').addEventListener('click', this.#onCloseClick);
+    this.#onSaveEdit = onSaveEdit;
+    this.element.querySelector('.event__save-btn').addEventListener('click', this.#onSaveEdit);
   }
 
-  getTemplate() {
-    return createEditFormTemplate(this.destinations, this.offers);
-  }
-
-  getElement() {
-    if (!this.element) {
-      this.element = createElement(this.getTemplate());
-    }
-
-    return this.element;
-  }
-
-  removeElement() {
-    this.element = null;
+  get template() {
+    return createEditFormTemplate(this.#destinations, this.#offers);
   }
 }
