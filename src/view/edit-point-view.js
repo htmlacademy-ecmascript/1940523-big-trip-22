@@ -1,6 +1,6 @@
 import AbstractView from '../framework/view/abstract-view.js';
-import {DESCRIPTIONS, EVENT_TYPES, MAX_PRICE_VALUE} from '../constants.js';
-import {getRandomArrayElement, getRandomBool, getRandomNumber} from '../utils';
+import { EVENT_TYPES } from '../constants.js';
+import { getRandomBool } from '../utils';
 
 function createDestinationOption(destination) {
   return `
