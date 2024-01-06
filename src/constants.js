@@ -46,7 +46,7 @@ export const Price = {
 
 export const Duration = {
   HOUR: 6,
-  DAY: 5,
+  DAY: 15,
   MINUTE: 24
 };
 
