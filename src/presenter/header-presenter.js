@@ -1,6 +1,6 @@
-import {render, RenderPosition} from '../render';
-import HeaderInfoView from '../view/header-info-view';
-import ListFilterView from '../view/list-filter-view';
+import { render, RenderPosition } from '../framework/render.js';
+import HeaderInfoView from '../view/header-info-view.js';
+import ListFilterView from '../view/list-filter-view.js';
 
 export default class HeaderPresenter {
   constructor({ tripHeaderInfo, tripHeaderFilter }) {

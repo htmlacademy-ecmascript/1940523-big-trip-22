@@ -1,9 +1,9 @@
-import { getDestinations } from '../mock/destination.js';
-
 export default class DestinationModel {
   #destinations = [];
-  constructor() {
-    this.#destinations = getDestinations();
+
+  constructor(service) {
+    this.service = service;
+    this.#destinations = this.service.getDestinations();
   }
 
   get() {
@@ -13,8 +13,7 @@ export default class DestinationModel {
   getById (id) {
     return (
       this.#destinations.find(
-        (destination) => destination.id === id.toString()
-      ) || null
+        (destination) => destination.id === id)
     );
   }
 }
