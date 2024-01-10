@@ -3,7 +3,7 @@ import {
   getDifferenceInTime,
   humanizeEventDate,
   humanizeEventTime
-} from '../utils.js';
+} from '../utils/point.js';
 
 function createTripOffer ({offers}) {
   return offers.map(({title, price}) => (

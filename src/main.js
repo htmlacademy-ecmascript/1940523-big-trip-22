@@ -15,7 +15,8 @@ const offersModel = new OffersModel(mockService);
 
 const headerPresenter = new HeaderPresenter({
   tripHeaderInfo: siteTripMainElement,
-  tripHeaderFilter: siteFiltersElement
+  tripHeaderFilter: siteFiltersElement,
+  eventPointsModel
 });
 const mainPresenter = new MainPresenter({
   tripContainer: siteTripEventsElements,

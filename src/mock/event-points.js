@@ -1,6 +1,6 @@
-import { getRandomBool, getRandomNumber } from '../utils.js';
+import { getRandomBool, getRandomNumber } from '../utils/common.js';
 import { MAX_PRICE_VALUE } from '../constants.js';
-import { getDate } from './utils.js';
+import { getDate } from '../utils/point.js';
 
 export const generateEventPoint = (type, destinationId, offerIds) => ({
   id: crypto.randomUUID(),
