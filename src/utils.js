@@ -35,6 +35,7 @@ export function getDifferenceInTime(start, dateTo) {
     return dayjs(difference).format(FULL_DATE_FORMAT);
   }
 }
+
 //функция инкремента
 export function incrementCounter(startFrom) {
   let counterStart = startFrom;
@@ -51,6 +52,11 @@ export function getRandomArrayElement(items) {
 //получение рандомного числа
 export function getRandomNumber(maxNumber) {
   return Math.ceil(Math.random() * maxNumber);
+}
+
+//получение рандомного числа из диапазона
+export function getRandomNumberFromRange (min, max) {
+  return Math.floor(Math.random() * (max - min)) + min;
 }
 
 //получение рандомного булева значения
