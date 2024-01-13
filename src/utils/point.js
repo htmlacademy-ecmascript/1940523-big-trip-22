@@ -1,5 +1,6 @@
 import dayjs from 'dayjs';
 import minMax from 'dayjs/plugin/minMax';
+import {getRandomNumberFromRange} from './common.js';
 import {
   DATE_FORMAT,
   TIME_FORMAT,
@@ -7,10 +8,33 @@ import {
   SEC_IN_MINUTES,
   HOURS_IN_DAY,
   MINUTES_FORMAT,
-  FULL_DATE_FORMAT, HOURS_FORMAT
-} from './constants.js';
+  FULL_DATE_FORMAT,
+  HOURS_FORMAT,
+  Duration
+} from '../constants.js';
 
 dayjs.extend(minMax);
+
+let randomDate = dayjs().subtract(getRandomNumberFromRange(1, Duration.DAY), 'day').toDate();
+
+export const getDate = ({
+  next
+}) => {
+  const daysInterval = getRandomNumberFromRange(1, Duration.DAY);
+  const hoursInterval = getRandomNumberFromRange(1, Duration.HOUR);
+  const minsInterval = getRandomNumberFromRange(0, Duration.MINUTE);
+
+  if (next) {
+    randomDate = dayjs(randomDate)
+      .add(minsInterval, 'minute')
+      .add(hoursInterval, 'hour')
+      .add(daysInterval, 'day')
+      .toDate();
+  }
+
+  return randomDate;
+};
+
 
 export function humanizeEventDate (eventDate) {
   return eventDate ? dayjs(eventDate).format(DATE_FORMAT) : '';
@@ -36,34 +60,18 @@ export function getDifferenceInTime(start, dateTo) {
   }
 }
 
-//функция инкремента
-export function incrementCounter(startFrom) {
-  let counterStart = startFrom;
-  return function () {
-    return counterStart++;
-  };
+
+export function isPointFuture(dateFrom) {
+
+  return dayjs().isBefore(dateFrom, 'day');
 }
 
-//получение рандомного элемента из массива
-export function getRandomArrayElement(items) {
-  return items[Math.floor(Math.random() * items.length)];
+export function isPointPresent(dateFrom, dateTo) {
+
+  return !isPointFuture(dateFrom) && !isPointPast(dateTo);
 }
 
-//получение рандомного числа
-export function getRandomNumber(maxNumber) {
-  return Math.ceil(Math.random() * maxNumber);
-}
+export function isPointPast(dateTo) {
 
-//получение рандомного числа из диапазона
-export function getRandomNumberFromRange (min, max) {
-  return Math.floor(Math.random() * (max - min)) + min;
-}
-
-//получение рандомного булева значения
-export function getRandomBool() {
-  return Math.random() >= 0.5;
-}
-
-export function getElementByKey(object, key) {
-  return object[key] || null;
+  return dayjs().isAfter(dateTo, 'day');
 }

@@ -69,3 +69,47 @@ export const OFFERS_TITLES = [
   'Choose seats',
   'Travel by train'
 ];
+
+export const SORT_TYPES = [
+  {
+    type: 'day',
+    isDisabled: false,
+    isChecked: false,
+  },
+  {
+    type: 'event',
+    isDisabled: true,
+    isChecked: false,
+  },
+  {
+    type: 'time',
+    isDisabled: false,
+    isChecked: false,
+  },
+  {
+    type: 'price',
+    isDisabled: false,
+    isChecked: true,
+  },
+  {
+    type: 'offers',
+    isDisabled: true,
+    isChecked: false,
+  }
+];
+
+export const FILTER_TYPE = {
+  EVERYTHING: 'everything',
+  FUTURE: 'future',
+  PRESENT: 'present',
+  PAST: 'past'
+};
+
+export const NO_POINT_MASSAGES = {
+  loadFail: 'Failed to load latest route information',
+  loading: 'Loading...',
+  everthing: 'Click New Event to create your first point',
+  past: 'There are no past events now',
+  present: 'There are no present events now',
+  future: 'There are no future events now'
+};

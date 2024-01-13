@@ -1,8 +1,10 @@
-import { render, replace } from '../framework/render.js';
+import {render, replace} from '../framework/render.js';
 import EditPointView from '../view/edit-point-view.js';
 import ListSortView from '../view/list-sort-view.js';
 import TripListView from '../view/trip-list-view.js';
 import TripPointView from '../view/trip-point-view.js';
+import {NO_POINT_MASSAGES} from '../constants';
+import NoPointView from '../view/empty-points-view';
 
 export default class MainPresenter {
   #tripContainer = null;
@@ -27,10 +29,20 @@ export default class MainPresenter {
   init() {
     render(this.#sortComponent, this.#tripContainer);
     render(this.#tripListComponent, this.#tripContainer);
+
+    if (!this.#eventPoints.length) {
+      this.#renderNoPoints();
+    }
+
     this.#eventPoints.forEach((eventPoint) => {
       const destination = this.#destinationModel.getById(eventPoint.destination);
       this.#renderEventPoint(this.#destinations, destination, eventPoint, this.#offersModel.getByType(eventPoint.type));
     });
+  }
+
+  #renderNoPoints() {
+    const massage = NO_POINT_MASSAGES.everthing;
+    render(new NoPointView({massage}), this.#tripContainer);
   }
 
   #renderEventPoint(destinations, destination, eventPoint, offers) {
