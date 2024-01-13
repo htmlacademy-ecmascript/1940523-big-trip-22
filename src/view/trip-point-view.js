@@ -5,7 +5,7 @@ import {
   humanizeEventTime
 } from '../utils/point.js';
 
-function createTripOffer ({offers}) {
+function createTripOffer (offers) {
   return offers.map(({title, price}) => (
     `<li class="event__offer">
         <span class="event__offer-title">${title}</span>
@@ -59,17 +59,30 @@ export default class TripPointView extends AbstractView {
   #eventPoint = null;
   #offers = null;
   #onEditClick = null;
+  #onFavoriteClick = null;
 
-  constructor({destination, eventPoint, offers, onEditClick}) {
+  constructor({destination, eventPoint, offers, onEditClick, onFavoriteClick}) {
     super();
     this.#eventPoint = eventPoint;
     this.#destination = destination;
     this.#offers = offers;
     this.#onEditClick = onEditClick;
-    this.element.querySelector('.event__rollup-btn').addEventListener('click', this.#onEditClick);
+    this.#onFavoriteClick = onFavoriteClick;
+    this.element.querySelector('.event__rollup-btn').addEventListener('click', this.#editClickHandler);
+    this.element.querySelector('.event__favorite-btn').addEventListener('click', this.#favoriteClickHandler);
   }
 
   get template() {
     return createTripPointTemplate(this.#destination, this.#eventPoint, this.#offers);
   }
+
+  #editClickHandler = (evt) => {
+    evt.preventDefault();
+    this.#onEditClick();
+  };
+
+  #favoriteClickHandler = (evt) => {
+    evt.preventDefault();
+    this.#onFavoriteClick();
+  };
 }
