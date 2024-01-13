@@ -72,6 +72,6 @@ export default class TripPresenter {
     });
 
     pointPresenter.init(eventPoint);
-    this.#pointsPresenter.set(eventPoint.id, pointPresenter);;
+    this.#pointsPresenter.set(eventPoint.id, pointPresenter);
   }
 }
