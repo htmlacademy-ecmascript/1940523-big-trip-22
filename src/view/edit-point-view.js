@@ -2,10 +2,12 @@ import AbstractView from '../framework/view/abstract-view.js';
 import { EVENT_TYPES } from '../constants.js';
 import { getRandomBool } from '../utils/common.js';
 
-function createDestinationOption(destination) {
-  return `
+function createDestinationOptionTemplate(destinations) {
+  return destinations.map((destination) => (
+    `
       <option value="${destination.name}">${destination.name}</option>
-  `;
+    `
+  )).join('');
 }
 
 function createEventType(eventTypes) {
@@ -32,7 +34,7 @@ function createOfferItems(offer) {
                 </div>`;
 }
 
-function createOfferItemsList ({offers}) {
+function createOfferItemsList (offers) {
   if (offers.length !== 0) {
     return `<section class="event__section  event__section--offers">
               <h3 class="event__section-title  event__section-title--offers">Offers</h3>
@@ -47,9 +49,8 @@ function createOfferItemsList ({offers}) {
 }
 
 function createEditFormTemplate(destinations, destination, eventPoint, offers) {
-
   const { name, description } = destination;
-  const {basePrice, dateFrom, dateTo, type, id} = eventPoint;
+  const { basePrice, dateFrom, dateTo, type, id } = eventPoint;
   const dateFromCurr = new Date(dateFrom).toLocaleString('en-US', {
     dateStyle: 'short',
     timeStyle: 'short',
@@ -60,8 +61,7 @@ function createEditFormTemplate(destinations, destination, eventPoint, offers) {
     timeStyle: 'short',
     hour12: false,
   });
-  //const currentPrice = getRandomNumber(MAX_PRICE_VALUE);
-  //const currentDescription = getRandomArrayElement(DESCRIPTIONS);
+
   return (
     `<li class="trip-events__item">
         <form class="event event--edit" action="#" method="post">
@@ -90,7 +90,7 @@ function createEditFormTemplate(destinations, destination, eventPoint, offers) {
               <input class="event__input  event__input--destination" id="event-destination-${id}" type="text" name="event-destination" value=${name} list="destination-list-${id}">
               <datalist id="destination-list-1">
 
-                ${destinations.map(createDestinationOption).join('')}
+                ${createDestinationOptionTemplate(destinations)}
 
               </datalist>
             </div>
@@ -132,8 +132,8 @@ function createEditFormTemplate(destinations, destination, eventPoint, offers) {
 }
 
 export default class EditPointView extends AbstractView {
-  #destinations = null;
-  #offers = null;
+  #destinations = [];
+  #offers = [];
   #onCloseClick = null;
   #onSaveEdit = null;
   #destination = null;
@@ -146,12 +146,17 @@ export default class EditPointView extends AbstractView {
     this.#eventPoint = eventPoint;
     this.#offers = offers;
     this.#onCloseClick = onCloseClick;
-    this.element.querySelector('.event__rollup-btn').addEventListener('click', this.#onCloseClick);
     this.#onSaveEdit = onSaveEdit;
-    this.element.querySelector('.event__save-btn').addEventListener('click', this.#onSaveEdit);
+    this.element.querySelector('.event__rollup-btn').addEventListener('click', this.#onCloseClick);
+    this.element.querySelector('.event__save-btn').addEventListener('click', this.#saveEditForm);
   }
 
   get template() {
     return createEditFormTemplate(this.#destinations, this.#destination, this.#eventPoint, this.#offers);
   }
+
+  #saveEditForm = (evt) => {
+    evt.preventDefault();
+    this.#onSaveEdit(this.#eventPoint);
+  };
 }

@@ -26,6 +26,6 @@ export function getRandomBool() {
   return Math.random() >= 0.5;
 }
 
-export function getElementByKey(object, key) {
-  return object[key] || null;
+export function updateItem(items, update) {
+  return items.map((item) => item.id === update.id ? update : item);
 }

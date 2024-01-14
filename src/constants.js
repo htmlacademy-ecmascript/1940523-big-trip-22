@@ -113,3 +113,8 @@ export const NO_POINT_MASSAGES = {
   present: 'There are no present events now',
   future: 'There are no future events now'
 };
+
+export const MODE = {
+  DEFAULT: 'DEFAULT',
+  EDITING: 'EDITING',
+};
