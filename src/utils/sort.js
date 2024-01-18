@@ -1,17 +1,17 @@
 import {SortTypes} from '../constants.js';
 import dayjs from 'dayjs';
 
-export const getPointsByDate = (pointA, pointB) =>
+const getPointsByDate = (pointA, pointB) =>
   dayjs(pointB.dateFrom).diff(dayjs(pointA.dateFrom));
 
-export const getPointsByTime = (pointA, pointB) => {
+const getPointsByTime = (pointA, pointB) => {
   const pointADuration = dayjs(pointA.dateTo).diff(dayjs(pointA.dateFrom));
   const pointBDuration = dayjs(pointB.dateTo).diff(dayjs(pointB.dateFrom));
 
   return pointBDuration - pointADuration;
 };
 
-export const getPointByPrice = (pointA, pointB) => pointB.basePrice - pointA.basePrice;
+const getPointByPrice = (pointA, pointB) => pointB.basePrice - pointA.basePrice;
 
 export const sorting = {
   [SortTypes.DAY]: (eventPoints) => eventPoints.toSorted(getPointsByDate),

@@ -5,7 +5,7 @@ import NoPointView from '../view/empty-points-view.js';
 import PointPresenter from './point-presener.js';
 import { updateItem } from '../utils/common.js';
 import SortPresenter from './sort-presener.js';
-import {getPointByPrice, getPointsByDate, getPointsByTime, sorting} from '../utils/sort.js';
+import {sorting} from '../utils/sort.js';
 
 export default class PointsPresenter {
   #tripContainer = null;
