@@ -59,9 +59,7 @@ export default class PointsPresenter {
         this.#eventPoints.sort(getPointByPrice);
         break;
     }
-    console.log(this.#currentSortType)
     this.#currentSortType = sortType;
-    console.log(this.#currentSortType)
   };
 
   #clearPoints = () => {
