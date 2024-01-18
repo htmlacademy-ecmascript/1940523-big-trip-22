@@ -70,35 +70,50 @@ export const OFFERS_TITLES = [
   'Travel by train'
 ];
 
-export const SORT_TYPES = [
-  {
-    type: 'day',
-    isDisabled: false,
-    isChecked: false,
-  },
-  {
-    type: 'event',
-    isDisabled: true,
-    isChecked: false,
-  },
-  {
-    type: 'time',
-    isDisabled: false,
-    isChecked: false,
-  },
-  {
-    type: 'price',
-    isDisabled: false,
-    isChecked: true,
-  },
-  {
-    type: 'offers',
-    isDisabled: true,
-    isChecked: false,
-  }
-];
+// export const SORT_TYPES = [
+//   {
+//     type: 'day',
+//     isDisabled: false,
+//     isChecked: false,
+//   },
+//   {
+//     type: 'event',
+//     isDisabled: true,
+//     isChecked: false,
+//   },
+//   {
+//     type: 'time',
+//     isDisabled: false,
+//     isChecked: false,
+//   },
+//   {
+//     type: 'price',
+//     isDisabled: false,
+//     isChecked: true,
+//   },
+//   {
+//     type: 'offers',
+//     isDisabled: true,
+//     isChecked: false,
+//   }
+// ];
+export const SortTypes = {
+  DAY: 'day',
+  EVENT: 'event',
+  TIME: 'time',
+  PRICE: 'price',
+  OFFER: 'offer'
+};
 
-export const FILTER_TYPE = {
+export const enabledSortType = {
+  [SortTypes.DAY]: true,
+  [SortTypes.EVENT]: false,
+  [SortTypes.TIME]: true,
+  [SortTypes.PRICE]: true,
+  [SortTypes.OFFER]: false,
+};
+
+export const FilterType = {
   EVERYTHING: 'everything',
   FUTURE: 'future',
   PRESENT: 'present',

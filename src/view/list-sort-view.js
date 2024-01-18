@@ -1,8 +1,7 @@
-import AbstractView from '../framework/view/abstract-view.js';
-import { SORT_TYPES } from '../constants.js';
+import RadioListView from './radio-list-view.js';
 
-function createSortTypeTemplate (types) {
-  return types.reduce(
+function createSortTypeTemplate (sorting) {
+  return sorting.reduce(
     (markup, { type, isDisabled, isChecked }) => `${markup}
     <div class="trip-sort__item  trip-sort__item--${type}">
           <input id="sort-${type}"
@@ -17,16 +16,14 @@ function createSortTypeTemplate (types) {
   );
 }
 
-function createListSortTemplate() {
-  return (
-    `<form class="trip-events__trip-sort  trip-sort" action="#" method="get">
-          ${createSortTypeTemplate(SORT_TYPES)}
-      </form>`
-  );
-}
+const createListSortTemplate = (sorting) =>
+  `<form class="trip-events__trip-sort  trip-sort" action="#" method="get">
+      ${createSortTypeTemplate(sorting)}
+  </form>`;
 
-export default class ListSortView extends AbstractView {
+
+export default class ListSortView extends RadioListView {
   get template() {
-    return createListSortTemplate();
+    return createListSortTemplate(this._items);
   }
 }
