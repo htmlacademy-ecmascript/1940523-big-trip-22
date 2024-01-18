@@ -9,6 +9,7 @@ function createSortTypeTemplate (sorting) {
           type="radio"
           name="trip-sort"
           value="sort-${type}"
+          data-item="${type}"
           ${isDisabled ? 'disabled' : ''}
           ${isChecked ? 'checked' : ''}>
           <label class="trip-sort__btn" for="sort-${type}">${type}</label>

@@ -5,7 +5,7 @@ import NoPointView from '../view/empty-points-view.js';
 import PointPresenter from './point-presener.js';
 import { updateItem } from '../utils/common.js';
 import SortPresenter from './sort-presener.js';
-import { getPointByPrice, getPointsByDate, getPointsByTime } from '../utils/sort.js';
+import {getPointByPrice, getPointsByDate, getPointsByTime, sorting} from '../utils/sort.js';
 
 export default class PointsPresenter {
   #tripContainer = null;
@@ -46,20 +46,8 @@ export default class PointsPresenter {
   }
 
   #sortPoints = (sortType) => {
-    //this.#currentSortType = sortType;
-    //this.#eventPoints = sorting[this.#currentSortType](this.#eventPoints);
-    switch(sortType) {
-      case 'day':
-        this.#eventPoints.sort(getPointsByDate);
-        break;
-      case 'time':
-        this.#eventPoints.sort(getPointsByTime);
-        break;
-      case 'price':
-        this.#eventPoints.sort(getPointByPrice);
-        break;
-    }
     this.#currentSortType = sortType;
+    this.#eventPoints = sorting[this.#currentSortType](this.#eventPoints);
   };
 
   #clearPoints = () => {
