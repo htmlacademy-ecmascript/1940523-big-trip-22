@@ -3,7 +3,7 @@ import MockService from '../service/mock-service.js';
 import DestinationModel from '../model/destination-model.js';
 import EventPointsModel from '../model/event-points-model.js';
 import OffersModel from '../model/offers-model';
-import TripPresenter from './trip-presenter.js';
+import PointsPresenter from './points-presenter.js';
 
 const siteTripMainElement = document.querySelector('.trip-main');
 const siteTripEventsElements = document.querySelector('.trip-events');
@@ -18,7 +18,7 @@ const headerPresenter = new HeaderPresenter({
   tripHeaderFilter: siteFiltersElement,
   eventPointsModel
 });
-const tripPresenter = new TripPresenter({
+const pointsPresenter = new PointsPresenter({
   tripContainer: siteTripEventsElements,
   destinationModel,
   eventPointsModel,
@@ -28,6 +28,6 @@ const tripPresenter = new TripPresenter({
 export default class MainPresenter {
   init() {
     headerPresenter.init();
-    tripPresenter.init();
+    pointsPresenter.init();
   }
 }

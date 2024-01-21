@@ -45,7 +45,7 @@ export default class PointPresenter {
       onSaveEdit: this.#editPointSubmitHandler,
     });
 
-    if (preventEventPointComponent === null || preventEventEditPointComponent === null) {
+    if (!preventEventPointComponent || !preventEventEditPointComponent) {
       render(this.#eventPointComponent, this.#pointListContainer);
       return;
     }
