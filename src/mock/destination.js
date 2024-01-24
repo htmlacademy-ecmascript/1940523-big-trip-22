@@ -7,7 +7,7 @@ export const generateDestination = () => {
   return ({
     id: crypto.randomUUID(),
     name: city,
-    description: getRandomArrayElement(DESCRIPTIONS),
+    description: `It is ${city} description. ${DESCRIPTIONS}`,
     pictures: Array.from({length: getRandomNumber(MAX_IMAGES_COUNT)}, () => ({
       src: `https://loremflickr.com/666/666?${crypto.randomUUID()}`,
       description: `It is ${city} description`
