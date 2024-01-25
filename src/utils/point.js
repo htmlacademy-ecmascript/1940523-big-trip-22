@@ -1,17 +1,7 @@
 import dayjs from 'dayjs';
 import minMax from 'dayjs/plugin/minMax';
 import {getRandomNumberFromRange} from './common.js';
-import {
-  DATE_FORMAT,
-  TIME_FORMAT,
-  DATE_TIME_FORMAT,
-  SEC_IN_MINUTES,
-  HOURS_IN_DAY,
-  MINUTES_FORMAT,
-  FULL_DATE_FORMAT,
-  HOURS_FORMAT,
-  Duration
-} from '../constants.js';
+import {DATE_FORMAT, DATE_TIME_FORMAT, Duration, TIME, TIME_FORMAT} from '../constants.js';
 
 dayjs.extend(minMax);
 
@@ -48,18 +38,29 @@ export function humanizeEventDateTime (eventDateTime) {
   return eventDateTime ? dayjs(eventDateTime).format(DATE_TIME_FORMAT) : '';
 }
 
-export function getDifferenceInTime(start, dateTo) {
-  const difference = dayjs(dateTo).diff(start) / SEC_IN_MINUTES;
+export const getDifferenceInTime = (dateFrom, dateTo) => {
+  const durationInMinutes = dayjs(dateTo).diff(dateFrom, 'm');
 
-  if (difference < SEC_IN_MINUTES) {
-    return dayjs(difference).format(MINUTES_FORMAT);
-  } else if (difference > SEC_IN_MINUTES && difference < SEC_IN_MINUTES * HOURS_IN_DAY) {
-    return dayjs(difference).format(HOURS_FORMAT);
-  } else {
-    return dayjs(difference).format(FULL_DATE_FORMAT);
+  const days = Math.floor(durationInMinutes / (TIME.HOURS_PER_DAY * TIME.MINUTES_PER_HOUR));
+  const hours = Math.floor((durationInMinutes % (TIME.HOURS_PER_DAY * TIME.MINUTES_PER_HOUR)) / TIME.MINUTES_PER_HOUR);
+  const minutes = durationInMinutes % TIME.MINUTES_PER_HOUR;
+
+  let durationString = '';
+
+  if (days > 0) {
+    durationString += `${days}D `;
   }
-}
 
+  if (hours > 0) {
+    durationString += `${hours}H `;
+  }
+
+  if (minutes > 0) {
+    durationString += `${minutes}M `;
+  }
+
+  return durationString;
+};
 
 export function isPointFuture(dateFrom) {
 
