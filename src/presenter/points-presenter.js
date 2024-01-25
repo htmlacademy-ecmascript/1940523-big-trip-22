@@ -37,7 +37,6 @@ export default class PointsPresenter {
   }
 
   #renderSort() {
-    //render(new ListSortView(), this.#tripContainer);
     const sortPresenter = new SortPresenter({
       container: this.#tripContainer,
       sortTypeHandler: this.#sortTypesChangeHandler,
@@ -57,7 +56,6 @@ export default class PointsPresenter {
 
   #renderTripList() {
     render(this.#tripListComponent, this.#tripContainer);
-    //this.#renderEventPoints();
     this.#sortTypesChangeHandler(this.#defaultSortType);
   }
 

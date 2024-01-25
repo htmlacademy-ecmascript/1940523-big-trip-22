@@ -37,10 +37,9 @@ export default class PointPresenter {
     });
 
     this.#eventEditPointComponent = new EditPointView({
-      destinations: this.#destinationModel.get(),
-      destination: this.#destinationModel.getById(point.destination),
       eventPoint: this.#point,
-      offers: this.#offersModel.getByType(point.type),
+      destinations: this.#destinationModel.get(),
+      pointOffers: this.#offersModel.get(),
       onCloseClick: this.#editPointCloseHandler,
       onSaveEdit: this.#editPointSubmitHandler,
     });

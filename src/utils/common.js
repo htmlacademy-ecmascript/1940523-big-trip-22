@@ -29,3 +29,7 @@ export function getRandomBool() {
 export function updateItem(items, update) {
   return items.map((item) => item.id === update.id ? update : item);
 }
+
+export function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}

@@ -19,7 +19,7 @@ export const sorting = {
     throw new Error(`Sort by ${SortTypes.EVENT} is disabled`);
   },
   [SortTypes.TIME]: (eventPoints) => eventPoints.toSorted(getPointsByTime),
-  [SortTypes.PRICE]: (eventPoints) => eventPoints.toSorted(getPointByPrice()),
+  [SortTypes.PRICE]: (eventPoints) => eventPoints.toSorted(getPointByPrice),
   [SortTypes.OFFER]: () => {
     throw new Error(`Sort by ${SortTypes.OFFER} is disabled`);
   },
