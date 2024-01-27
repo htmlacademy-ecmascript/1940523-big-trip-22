@@ -29,9 +29,9 @@ function createTripPointTemplate(destination, eventPoint, offers) {
         <h3 class="event__title">${type} ${name}</h3>
         <div class="event__schedule">
           <p class="event__time">
-            <time class="event__start-time" datetime=${dateFrom}>${humanizeEventTime(dateFrom)}</time>
+            <time class="event__start-time" datetime="${dateFrom}">${humanizeEventTime(dateFrom)}</time>
             &mdash;
-            <time class="event__end-time" datetime=${dateTo}>${humanizeEventTime(dateTo)}</time>
+            <time class="event__end-time" datetime="${dateTo}">${humanizeEventTime(dateTo)}</time>
           </p>
           <p class="event__duration">${getDifferenceInTime(dateFrom, dateTo)}</p>
         </div>

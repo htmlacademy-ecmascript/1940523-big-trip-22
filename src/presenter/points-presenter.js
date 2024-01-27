@@ -68,6 +68,8 @@ export default class PointsPresenter {
   #handleDataChange = (updatedPoint) => {
     this.#eventPoints = updateItem(this.#eventPoints, updatedPoint);
     this.#pointsPresenter.get(updatedPoint.id).init(updatedPoint);
+
+    this.#sortTypesChangeHandler(this.#currentSortType);
   };
 
   #handleModeChange = () => {

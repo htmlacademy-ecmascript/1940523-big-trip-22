@@ -68,6 +68,7 @@ export default class PointPresenter {
 
   resetView() {
     if (this.#mode !== MODE.DEFAULT) {
+      this.#eventEditPointComponent.reset(this.#point);
       this.#replaceEditFormToPoint();
     }
   }
@@ -81,6 +82,7 @@ export default class PointPresenter {
   };
 
   #replaceEditFormToPoint = () => {
+    this.#eventEditPointComponent.reset(this.#point);
     replace(this.#eventPointComponent, this.#eventEditPointComponent);
     this.#mode = MODE.DEFAULT;
   };

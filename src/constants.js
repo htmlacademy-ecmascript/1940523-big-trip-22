@@ -5,11 +5,12 @@ export const DATE_FORMAT = 'MMM D';
 export const TIME_FORMAT = 'HH:mm';
 export const DATE_TIME_FORMAT = 'DD/MM/YY HH:mm';
 
-export const MINUTES_FORMAT = 'mm[M]';
-export const HOURS_FORMAT = 'HH[H] mm[M]';
-export const FULL_DATE_FORMAT = 'DD[D] HH[H] mm[M]';
-export const HOURS_IN_DAY = 24;
-export const SEC_IN_MINUTES = 100;
+export const TIME = {
+  MIN_MINUTES: 1,
+  MAX_MINUTES: 2440,
+  HOURS_PER_DAY: 24,
+  MINUTES_PER_HOUR: 60
+};
 
 export const OFFERS_COUNT = {
   MIN: 1,
@@ -70,33 +71,6 @@ export const OFFERS_TITLES = [
   'Travel by train'
 ];
 
-// export const SORT_TYPES = [
-//   {
-//     type: 'day',
-//     isDisabled: false,
-//     isChecked: false,
-//   },
-//   {
-//     type: 'event',
-//     isDisabled: true,
-//     isChecked: false,
-//   },
-//   {
-//     type: 'time',
-//     isDisabled: false,
-//     isChecked: false,
-//   },
-//   {
-//     type: 'price',
-//     isDisabled: false,
-//     isChecked: true,
-//   },
-//   {
-//     type: 'offers',
-//     isDisabled: true,
-//     isChecked: false,
-//   }
-// ];
 export const SortTypes = {
   DAY: 'day',
   EVENT: 'event',
