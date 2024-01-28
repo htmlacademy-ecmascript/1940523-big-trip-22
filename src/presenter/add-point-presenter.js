@@ -61,6 +61,6 @@ export default class AddPointPresenter {
       UpdateType.MINOR,
       point
     );
-    this.destroy({isCanceled: false})
+    this.destroy({isCanceled: false});
   };
 }

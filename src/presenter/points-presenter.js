@@ -67,7 +67,7 @@ export default class PointsPresenter {
       this.#clearBoard();
       this.#renderBoard();
     }
-  }
+  };
 
   #renderBoard() {
     if (!this.points.length) {
