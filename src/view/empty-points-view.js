@@ -1,6 +1,7 @@
 import AbstractView from '../framework/view/abstract-view.js';
+import {EmptyListMessage} from '../constants.js';
 
-function createNoPointsTemplate(massage) {
+function createNoPointsTemplate({massage}) {
   return (
     `<p class="trip-events__msg">
       ${ massage }
@@ -9,14 +10,16 @@ function createNoPointsTemplate(massage) {
 }
 
 export default class NoPointView extends AbstractView {
-  #massage = null;
+  #filterType = null;
 
-  constructor({massage}) {
+  constructor({filterType}) {
     super();
-    this.#massage = massage;
+    this.#filterType = filterType;
   }
 
   get template() {
-    return createNoPointsTemplate(this.#massage);
+    return createNoPointsTemplate({
+      massage: EmptyListMessage[this.#filterType.toUpperCase()],
+    });
   }
 }

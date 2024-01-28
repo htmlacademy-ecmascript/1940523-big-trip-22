@@ -1,3 +1,4 @@
+import he from 'he';
 import AbstractView from '../framework/view/abstract-view.js';
 import {
   getDifferenceInTime,
@@ -18,7 +19,7 @@ function createTripOffer (offers) {
 function createTripPointTemplate(destination, eventPoint, offers) {
   const { name } = destination;
   const { type, basePrice, isFavorite, dateFrom, dateTo } = eventPoint;
-  const eventOffers = offers.filter((offer) => eventPoint.offers.includes(offer.id));
+  const eventOffers = offers.filter((offer) => eventPoint.offers?.includes(offer.id));
   const isFavoriteItem = isFavorite ? 'event__favorite-btn--active' : '';
   return `<li class="trip-events__item">
       <div class="event">
@@ -26,7 +27,7 @@ function createTripPointTemplate(destination, eventPoint, offers) {
         <div class="event__type">
           <img class="event__type-icon" width="42" height="42" src="img/icons/${type}.png" alt="Event type icon">
         </div>
-        <h3 class="event__title">${type} ${name}</h3>
+        <h3 class="event__title">${type} ${he.encode(name)}</h3>
         <div class="event__schedule">
           <p class="event__time">
             <time class="event__start-time" datetime="${dateFrom}">${humanizeEventTime(dateFrom)}</time>

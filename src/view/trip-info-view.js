@@ -1,6 +1,6 @@
 import AbstractView from '../framework/view/abstract-view.js';
 
-function TripHeaderInfoTemplate() {
+function TripInfoTemplate() {
   return (
     `<section class="trip-main__trip-info  trip-info">
       <div class="trip-info__main">
@@ -14,8 +14,8 @@ function TripHeaderInfoTemplate() {
   );
 }
 
-export default class HeaderInfoView extends AbstractView {
+export default class TripInfoView extends AbstractView {
   get template() {
-    return TripHeaderInfoTemplate();
+    return TripInfoTemplate();
   }
 }

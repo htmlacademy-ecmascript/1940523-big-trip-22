@@ -1,34 +1,34 @@
-import AbstractView from '../framework/view/abstract-view.js';
+import RadioListView from './radio-list-view.js';
+import {capitalizeFirstLetter} from '../utils/common.js';
 
-function createElementFilterTemplate(filter, isChecked) {
-  const { type, count } = filter;
-
-  return `<div class="trip-filters__filter">
-            <input id="filter-${type}" class="trip-filters__filter-input  visually-hidden" type="radio" name="trip-filter" value="${type}"  ${isChecked ? 'checked' : ''} ${count === 0 ? 'disabled' : ''}>
-            <label class="trip-filters__filter-label" for="filter-${type}">${type}</label>
-          </div>`;
+function createElementFilterTemplate(filters) {
+  return filters.reduce(
+    (markup, { type, isChecked, isDisabled }) => `${markup}
+    <div class="trip-filters__filter">
+            <input id="filter-${type}" class="trip-filters__filter-input  visually-hidden"
+            type="radio"
+            name="trip-filter"
+            value="${type}"
+            data-item="${type}"
+            ${isChecked ? 'checked' : ''}
+            ${isDisabled ? 'disabled' : ''}>
+            <label class="trip-filters__filter-label" for="filter-${type}">${capitalizeFirstLetter(type)}</label>
+          </div>`,
+    ''
+  );
 }
 
-function createListFilterTemplate(filterTypes) {
-  const filterTypesTemplate = filterTypes
-    .map((filter, index) => createElementFilterTemplate(filter, index === 0))
-    .join('');
+const createListFilterTemplate = (
+  filters
+) => `<form class="trip-filters" action="#" method="get">
+        ${createElementFilterTemplate(filters)}
+        <button class="visually-hidden" type="submit">Accept filter</button>
+      </form>`;
 
-  return `<form class="trip-filters" action="#" method="get">
-            ${filterTypesTemplate}
-            <button class="visually-hidden" type="submit">Accept filter</button>
-          </form>`;
-}
 
-export default class ListFilterView extends AbstractView {
-  #filters = null;
-
-  constructor({filters}) {
-    super();
-    this.#filters = filters;
-  }
+export default class ListFilterView extends RadioListView {
 
   get template() {
-    return createListFilterTemplate(this.#filters);
+    return createListFilterTemplate(this._items);
   }
 }

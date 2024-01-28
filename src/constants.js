@@ -94,16 +94,41 @@ export const FilterType = {
   PAST: 'past'
 };
 
-export const NO_POINT_MASSAGES = {
-  loadFail: 'Failed to load latest route information',
-  loading: 'Loading...',
-  everthing: 'Click New Event to create your first point',
-  past: 'There are no past events now',
-  present: 'There are no present events now',
-  future: 'There are no future events now'
+export const UserAction = {
+  UPDATE_POINT: 'UPDATE_POINT',
+  DELETE_POINT: 'DELETE_POINT',
+  CREATE_POINT: 'CREATE_POINT',
+};
+
+export const UpdateType = {
+  PATCH: 'PATCH',
+  MINOR: 'MINOR',
+  MAJOR: 'MAJOR',
+};
+
+export const EmptyListMessage = {
+  EVERYTHING: 'Click New Event to create your first point',
+  FUTURE: 'There are no future events now',
+  PRESENT: 'There are no present events now',
+  PAST: 'There are no past events now'
 };
 
 export const MODE = {
   DEFAULT: 'DEFAULT',
   EDITING: 'EDITING',
+};
+
+export const EditType = {
+  CREATING: 'CREATING',
+  EDITING: 'EDITING',
+};
+
+export const POINT_EMPTY = {
+  basePrice: 0,
+  dateFrom: null,
+  dateTo: null,
+  destination: null,
+  isFavorite: false,
+  offer: null,
+  type: EVENT_TYPES[1],
 };
