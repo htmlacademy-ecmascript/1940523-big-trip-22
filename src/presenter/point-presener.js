@@ -44,7 +44,7 @@ export default class PointPresenter {
       onCloseClick: this.#editPointCloseHandler,
       onSaveEdit: this.#editPointSubmitHandler,
       onDeleteClick: this.#deleteClickHandler,
-      editorMode: EditType.CREATING,
+      editorMode: EditType.EDITING,
     });
 
     if (!preventEventPointComponent || !preventEventEditPointComponent) {
