@@ -3,7 +3,6 @@ import {EditType, EVENT_TYPES, POINT_EMPTY} from '../constants.js';
 import {capitalizeFirstLetter } from '../utils/common.js';
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
-import {logPlugin} from "@babel/preset-env/lib/debug";
 
 function createDestinationOptionTemplate(destinations) {
   return destinations.map((destination) => (
