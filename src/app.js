@@ -7,6 +7,7 @@ import FilterModel from './model/filter-model.js';
 import FilterPresenter from './presenter/filter-presenter.js';
 import AddPointButtonPresenter from './presenter/add-point-button-presenter.js';
 import TripInfoPresenter from './presenter/trip-info-presenter.js';
+import PointApiService from "./service/point-api-service";
 
 const siteTripMainElement = document.querySelector('.trip-main');
 const siteTripEventsElements = document.querySelector('.trip-events');
@@ -16,6 +17,8 @@ const destinationModel = new DestinationModel(mockService);
 const eventPointsModel = new EventPointsModel(mockService);
 const offersModel = new OffersModel(mockService);
 const filtersModel = new FilterModel();
+const AUTORIZATION = 'Basic pdkrlmvspkv7';
+const END_POINT = 'https://22.objects.htmlacademy.pro/big-trip';
 
 const tripInfoPresenter = new TripInfoPresenter({
   tripInfoContainer: siteTripMainElement,
