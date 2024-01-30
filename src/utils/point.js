@@ -38,6 +38,10 @@ export function humanizeEventDateTime (eventDateTime) {
   return eventDateTime ? dayjs(eventDateTime).format(DATE_TIME_FORMAT) : '';
 }
 
+export function isDatesEqual (dateA, dateB) {
+  return (dateA === null && dateB === null) || dayjs(dateA).isSame(dateB, 'D');
+}
+
 export const getDifferenceInTime = (dateFrom, dateTo) => {
   const durationInMinutes = dayjs(dateTo).diff(dateFrom, 'm');
 

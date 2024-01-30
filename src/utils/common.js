@@ -1,4 +1,5 @@
-//функция инкремента
+import {getDifferenceInTime, isDatesEqual} from './point.js';
+
 export function incrementCounter(startFrom) {
   let counterStart = startFrom;
   return function () {
@@ -33,3 +34,8 @@ export function updateItem(items, update) {
 export function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
+
+export const isMinorChange = (pointA, pointB) =>
+  isDatesEqual(pointA, pointB)
+  || pointA.basePrice !== pointB.basePrice
+  || getDifferenceInTime(pointA.dateFrom, pointA.dateTo) !== getDifferenceInTime(pointB.dateFrom, pointB.dateTo);
