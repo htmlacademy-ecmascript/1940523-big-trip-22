@@ -14,7 +14,7 @@ export default class PointApiService extends ApiService {
     return this._load({ url: SourceUrl.OFFERS}).then(ApiService.parseResponse);
   }
 
-  async UpdatePoint(point){
+  async updatePoint(point){
     const response = await this._load({
       url: `${SourceUrl.POINTS}/${point.id}`,
       method: Method.PUT,
@@ -26,7 +26,8 @@ export default class PointApiService extends ApiService {
     return parsedResponse;
   }
 
-  async AddPoint(point){
+  async addPoint(point){
+    const json = JSON.stringify(point);
     const response = await this._load({
       url: SourceUrl.POINTS,
       method: Method.POST,

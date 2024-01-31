@@ -1,20 +1,10 @@
-export const MAX_IMAGES_COUNT = 5;
-export const MAX_PRICE_VALUE = 1500;
-export const MAX_PRICE_OFFER = 69;
 export const DATE_FORMAT = 'MMM D';
 export const TIME_FORMAT = 'HH:mm';
 export const DATE_TIME_FORMAT = 'DD/MM/YY HH:mm';
 
-export const TIME = {
-  MIN_MINUTES: 1,
-  MAX_MINUTES: 2440,
-  HOURS_PER_DAY: 24,
-  MINUTES_PER_HOUR: 60
-};
-
-export const OFFERS_COUNT = {
-  MIN: 1,
-  MAX: 5
+export const TimeLimit = {
+  LOWER_LIMIT: 300,
+  UPPER_LIMIT: 1000,
 };
 
 export const EVENT_TYPES = [
@@ -29,61 +19,18 @@ export const EVENT_TYPES = [
   'restaurant',
 ];
 
-export const DESCRIPTIONS = [
-  'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-  'Cras aliquet varius magna, non porta ligula feugiat eget. Fusce tristique felis at fermentum pharetra.',
-  'Aliquam id orci ut lectus varius viverra.',
-  'Sed sed nisi sed augue convallis suscipit in sed felis. Aliquam erat volutpat.',
-  'Nunc fermentum tortor ac porta dapibus. In rutrum ac purus sit amet tempus.',
-  'Phasellus eros mauris, condimentum sed nibh vitae, sodales efficitur ipsum.',
-  'Nullam nunc ex, convallis sed finibus eget, sollicitudin eget ante.',
-  'Sed blandit, eros vel aliquam faucibus, purus ex euismod diam, eu luctus nunc ante ut dui.',
-];
-
-export const Price = {
-  MIN: 1,
-  MAX: 666
-};
-
-export const Duration = {
-  HOUR: 6,
-  DAY: 15,
-  MINUTE: 24
-};
-
 export const Method = {
   GET: 'GET',
-  PUT: ' PUT',
+  PUT: 'PUT',
   POST: 'POST',
-  DELETE: 'DELETE,'
+  DELETE: 'DELETE',
 };
 
 export const SourceUrl = {
   POINTS: 'points',
   OFFERS: 'offers',
   DESTINATIONS: 'destinations',
-}
-
-
-export const CITIES = [
-  'Istanbul',
-  'London',
-  'Berlin',
-  'Madrid',
-  'Rome',
-  'Paris',
-  'Barcelona',
-  'Prague',
-  'Moscow',
-];
-
-export const OFFERS_TITLES = [
-  'Add luggage',
-  'Switch to comfort class',
-  'Add meal',
-  'Choose seats',
-  'Travel by train'
-];
+};
 
 export const SortTypes = {
   DAY: 'day',
@@ -144,6 +91,6 @@ export const POINT_EMPTY = {
   dateTo: null,
   destination: null,
   isFavorite: false,
-  offer: null,
+  offers: [],
   type: EVENT_TYPES[1],
 };

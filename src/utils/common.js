@@ -1,4 +1,4 @@
-import {getDifferenceInTime, isDatesEqual} from './point.js';
+import {calcDuration, isDatesEqual} from './point.js';
 
 export function incrementCounter(startFrom) {
   let counterStart = startFrom;
@@ -38,7 +38,7 @@ export function capitalizeFirstLetter(string) {
 export const isMinorChange = (pointA, pointB) =>
   isDatesEqual(pointA, pointB)
   || pointA.basePrice !== pointB.basePrice
-  || getDifferenceInTime(pointA.dateFrom, pointA.dateTo) !== getDifferenceInTime(pointB.dateFrom, pointB.dateTo);
+  || calcDuration(pointA.dateFrom, pointA.dateTo) !== calcDuration(pointB.dateFrom, pointB.dateTo);
 
 export const adaptToClient = (point) => {
   const adaptedPoint = {
@@ -62,7 +62,7 @@ export const adaptToServer = (point) => {
     ...point,
     ['date_from']: new Date(point.dateFrom).toISOString(),
     ['date_to']: new Date(point.dateTo).toISOString(),
-    ['base_price']: point.basePrice,
+    ['base_price']: parseInt(point.basePrice, 10),
     ['is_favorite']: point.isFavorite,
   };
 

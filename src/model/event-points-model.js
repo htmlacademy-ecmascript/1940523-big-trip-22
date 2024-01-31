@@ -1,6 +1,6 @@
 import Observable from '../framework/observable.js';
 import {adaptToClient, adaptToServer, updateItem} from '../utils/common.js';
-import {UpdateType} from "../constants";
+import {UpdateType} from '../constants.js';
 
 export default class EventPointsModel extends Observable {
   #eventPoints = [];
@@ -13,7 +13,6 @@ export default class EventPointsModel extends Observable {
     this.#service = service;
     this.#destinationModel = destinationModel;
     this.#offersModel = offersModel;
-    //this.#eventPoints = service.getEventPoints();
   }
 
   async init() {
@@ -24,7 +23,7 @@ export default class EventPointsModel extends Observable {
       );
       const points = await this.#service.points;
       this.#eventPoints = points.map(adaptToClient);
-      this._notify(UpdateType.INIT, { isError: false} );
+      this._notify(UpdateType.INIT, { isError: false});
     } catch (error) {
       this.#eventPoints = [];
       this._notify(UpdateType.INIT, { isError: true });
@@ -65,7 +64,7 @@ export default class EventPointsModel extends Observable {
     try {
       await this.#service.deletePoint(point);
       this.#eventPoints = this.#eventPoints.filter((item) => item.id !== point.id);
-      this._notify(updateType);
+      this._notify(updateType, point);
     } catch (error) {
       throw new Error('Delete is fail');
     }
