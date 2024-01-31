@@ -27,7 +27,6 @@ export default class PointApiService extends ApiService {
   }
 
   async addPoint(point){
-    const json = JSON.stringify(point);
     const response = await this._load({
       url: SourceUrl.POINTS,
       method: Method.POST,
