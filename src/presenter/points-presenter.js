@@ -9,7 +9,6 @@ import {filter} from '../utils/filter.js';
 import AddPointPresenter from './add-point-presenter.js';
 import LoaderView from '../view/loader-view.js';
 import UiBlocker from '../framework/ui-blocker/ui-blocker.js';
-import {updateItem} from "../utils/common";
 
 export default class PointsPresenter {
   #tripContainer = null;

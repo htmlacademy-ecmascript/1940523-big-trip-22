@@ -125,7 +125,7 @@ function createDestinationTemplate (currentDestination) {
 }
 
 function createEditFormTemplate({ state, pointDestinations, pointOffers, editorMode}) {
-  const { basePrice, dateFrom, dateTo, type, id, destination, isDisabled, isFavorite, isSaving, isDeleting } = state;
+  const { basePrice, dateFrom, dateTo, type, id, destination, isDisabled, isSaving, isDeleting } = state;
   const isCreating = editorMode === EditType.CREATING;
   const selectedDestination = pointDestinations.find((item) => item.id === destination);
   const selectedDestinationName = selectedDestination ? selectedDestination.name : '';
