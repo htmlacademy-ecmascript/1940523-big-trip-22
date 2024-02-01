@@ -9,6 +9,7 @@ import {filter} from '../utils/filter.js';
 import AddPointPresenter from './add-point-presenter.js';
 import LoaderView from '../view/loader-view.js';
 import UiBlocker from '../framework/ui-blocker/ui-blocker.js';
+import {updateItem} from "../utils/common";
 
 export default class PointsPresenter {
   #tripContainer = null;
@@ -62,6 +63,8 @@ export default class PointsPresenter {
   addPointButtonClickHandler = () => {
     this.#isCreating = true;
     this.#addPointButtonPresenter.disabledButton();
+    this.#filterModel.set(UpdateType.MAJOR, FilterType.EVERYTHING);
+    this.#currentSortType = SortTypes.DAY;
     this.#addPointPresenter.init();
   };
 
@@ -80,7 +83,7 @@ export default class PointsPresenter {
       this.#renderLoading();
       return;
     }
-    if (this.points.length === 0 && !this.#isCreating) {
+    if (!this.points.length && !this.#isCreating) {
       this.#renderEmptyList();
       return;
     }
@@ -110,14 +113,17 @@ export default class PointsPresenter {
       case UpdateType.PATCH:
         this.#pointsPresenter.get(data?.id)?.init(data);
         break;
+
       case UpdateType.MINOR:
         this.#clearBoard();
         this.#renderBoard();
         break;
+
       case UpdateType.MAJOR:
         this.#clearBoard({ resetSortType: true });
         this.#renderBoard();
         break;
+
       case UpdateType.INIT:
         this.#isLoading = false;
         remove(this.#loaderComponent);
@@ -138,6 +144,7 @@ export default class PointsPresenter {
   #clearPoints = () => {
     this.#pointsPresenter.forEach((presenter) => presenter.destroy());
     this.#pointsPresenter.clear();
+    this.#addPointPresenter.destroy();
   };
 
   #renderTripList() {
@@ -187,6 +194,7 @@ export default class PointsPresenter {
 
   #handleModeChange = () => {
     this.#pointsPresenter.forEach((presenter) => presenter.resetView());
+    this.#addPointPresenter.destroy();
   };
 
   #renderEmptyList() {

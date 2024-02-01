@@ -58,18 +58,28 @@ function createEventTypeTemplate(eventType) {
   );
 }
 
-function rollupTemplate() {
-  return `<button class="event__rollup-btn" type="button">
-            <span class="visually-hidden">Open event</span>
-          </button>`;
-}
-
 function createDestinationPhotosTemplate(pictures) {
   return pictures.map((picture) => (
     `
     <img class="event__photo" src="${picture.src}" alt="${picture.description}">
     `
   )).join('');
+}
+
+function createButtonTemplate(isCreating, isDisabled, isDeleting) {
+  if (isCreating) {
+    return `
+    <button class="event__reset-btn" type="reset">Cancel</button>
+  `;
+  }
+  return `
+    <button class="event__reset-btn" ${isDisabled ? 'disabled' : ''} type="reset">
+        ${isDeleting ? 'Deleting...' : 'Delete'}
+    </button>
+    <button class="event__rollup-btn" type="button">
+        <span class="visually-hidden">Open event</span>
+    </button>
+  `;
 }
 
 function createOfferItems(offer, isChecked) {
@@ -115,7 +125,7 @@ function createDestinationTemplate (currentDestination) {
 }
 
 function createEditFormTemplate({ state, pointDestinations, pointOffers, editorMode}) {
-  const { basePrice, dateFrom, dateTo, type, id, destination } = state;
+  const { basePrice, dateFrom, dateTo, type, id, destination, isDisabled, isFavorite, isSaving, isDeleting } = state;
   const isCreating = editorMode === EditType.CREATING;
   const selectedDestination = pointDestinations.find((item) => item.id === destination);
   const selectedDestinationName = selectedDestination ? selectedDestination.name : '';
@@ -174,9 +184,8 @@ function createEditFormTemplate({ state, pointDestinations, pointOffers, editorM
               <input class="event__input  event__input--price" id="event-price-1" type="text" name="event-price" value="${basePrice}" pattern="\\d*">
             </div>
 
-            <button class="event__save-btn  btn  btn--blue" type="submit">Save</button>
-            <button class="event__reset-btn" type="reset">${isCreating ? 'Cancel' : 'Delete'}</button>
-            ${isCreating ? '' : rollupTemplate()}
+            <button class="event__save-btn  btn  btn--blue" type="submit">${isSaving ? 'Saving...' : 'Save'}</button>
+            ${createButtonTemplate(isCreating, isDisabled, isDeleting)}
           </header>
           <section class="event__details">
 
