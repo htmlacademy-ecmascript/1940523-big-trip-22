@@ -1,30 +1,10 @@
 import dayjs from 'dayjs';
 import minMax from 'dayjs/plugin/minMax';
-import {getRandomNumberFromRange} from './common.js';
-import {DATE_FORMAT, DATE_TIME_FORMAT, Duration, TIME, TIME_FORMAT} from '../constants.js';
+import duration from 'dayjs/plugin/duration';
+import {DATE_FORMAT, DATE_TIME_FORMAT, TIME_FORMAT} from '../constants.js';
 
 dayjs.extend(minMax);
-
-let randomDate = dayjs().subtract(getRandomNumberFromRange(1, Duration.DAY), 'day').toDate();
-
-export const getDate = ({
-  next
-}) => {
-  const daysInterval = getRandomNumberFromRange(1, Duration.DAY);
-  const hoursInterval = getRandomNumberFromRange(1, Duration.HOUR);
-  const minsInterval = getRandomNumberFromRange(0, Duration.MINUTE);
-
-  if (next) {
-    randomDate = dayjs(randomDate)
-      .add(minsInterval, 'minute')
-      .add(hoursInterval, 'hour')
-      .add(daysInterval, 'day')
-      .toDate();
-  }
-
-  return randomDate;
-};
-
+dayjs.extend(duration);
 
 export function humanizeEventDate (eventDate) {
   return eventDate ? dayjs(eventDate).format(DATE_FORMAT) : '';
@@ -42,28 +22,19 @@ export function isDatesEqual (dateA, dateB) {
   return (dateA === null && dateB === null) || dayjs(dateA).isSame(dateB, 'D');
 }
 
-export const getDifferenceInTime = (dateFrom, dateTo) => {
-  const durationInMinutes = dayjs(dateTo).diff(dateFrom, 'm');
+export const calcDuration = (dateFrom, dateTo) => {
+  const diff = dayjs(dateTo).diff(dayjs(dateFrom));
+  const eventDuration = dayjs.duration(diff);
 
-  const days = Math.floor(durationInMinutes / (TIME.HOURS_PER_DAY * TIME.MINUTES_PER_HOUR));
-  const hours = Math.floor((durationInMinutes % (TIME.HOURS_PER_DAY * TIME.MINUTES_PER_HOUR)) / TIME.MINUTES_PER_HOUR);
-  const minutes = durationInMinutes % TIME.MINUTES_PER_HOUR;
-
-  let durationString = '';
-
-  if (days > 0) {
-    durationString += `${days}D `;
+  if (eventDuration.days()) {
+    return eventDuration.format('DD[D] HH[H] mm[m]');
   }
 
-  if (hours > 0) {
-    durationString += `${hours}H `;
+  if (eventDuration.hours()) {
+    return eventDuration.format('HH[H] mm[m]');
   }
 
-  if (minutes > 0) {
-    durationString += `${minutes}M `;
-  }
-
-  return durationString;
+  return eventDuration.format('mm[m]');
 };
 
 export function isPointFuture(dateFrom) {

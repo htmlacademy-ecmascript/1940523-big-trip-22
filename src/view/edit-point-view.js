@@ -7,7 +7,7 @@ import 'flatpickr/dist/flatpickr.min.css';
 function createDestinationOptionTemplate(destinations) {
   return destinations.map((destination) => (
     `
-      <option value="${destination.name}"></option>
+      <option value="${destination}"></option>
     `
   )).join('');
 }
@@ -120,7 +120,7 @@ function createEditFormTemplate({ state, pointDestinations, pointOffers, editorM
   const selectedDestination = pointDestinations.find((item) => item.id === destination);
   const selectedDestinationName = selectedDestination ? selectedDestination.name : '';
   const currentPointOffers = pointOffers.find((offer) => offer.type === type);
-
+  const listCities = pointDestinations.map(({name}) => name);
   const dateFromCurr = new Date(dateFrom).toLocaleString('en-US', {
     dateStyle: 'short',
     timeStyle: 'short',
@@ -146,10 +146,14 @@ function createEditFormTemplate({ state, pointDestinations, pointOffers, editorM
                 ${type}
 
               </label>
-              <input class="event__input  event__input--destination" id="event-destination-${id}" type="text" name="event-destination" value="${selectedDestinationName}" list="destination-list-1">
+              <input class="event__input  event__input--destination" id="event-destination-${id}"
+              type="text"
+              name="event-destination"
+              value="${selectedDestinationName}"
+              list="destination-list-1">
               <datalist id="destination-list-1">
 
-                ${createDestinationOptionTemplate(pointDestinations)}
+                ${createDestinationOptionTemplate(listCities)}
 
               </datalist>
             </div>

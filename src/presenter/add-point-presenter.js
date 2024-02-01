@@ -29,7 +29,6 @@ export default class AddPointPresenter {
       onSaveEdit: this.#formSubmitHandler,
       editorMode: EditType.CREATING,
     });
-
     render(this.#addPointComponent, this.#container, RenderPosition.AFTERBEGIN);
     document.addEventListener('keydown', this.#escKeyDownHandler);
   }
@@ -43,6 +42,24 @@ export default class AddPointPresenter {
     this.#handleDestroy({isCanceled});
     document.removeEventListener('keydown', this.#escKeyDownHandler);
   }
+
+  setSaving = () => {
+    this.#addPointComponent.updateElement({
+      isDisabled: true,
+      isSaving: true
+    });
+  };
+
+  setAborting = () => {
+    const resetFormState = () => {
+      this.#addPointComponent.updateElement({
+        isDisabled: false,
+        isSaving: false,
+        //isDeleting: false,
+      });
+    };
+    this.#addPointComponent.shake(resetFormState);
+  };
 
   #cancelClickHandler = () => {
     this.destroy({isCanceled: true});
@@ -61,6 +78,6 @@ export default class AddPointPresenter {
       UpdateType.MINOR,
       point
     );
-    this.destroy({isCanceled: false});
+    // this.destroy({isCanceled: false});
   };
 }
