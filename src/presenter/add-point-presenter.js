@@ -33,14 +33,15 @@ export default class AddPointPresenter {
     document.addEventListener('keydown', this.#escKeyDownHandler);
   }
 
-  destroy({isCanceled = true}) {
+  destroy({isCanceled = true} = {}) {
     if (!this.#addPointComponent) {
       return;
     }
+
     remove(this.#addPointComponent);
     this.#addPointComponent = null;
-    this.#handleDestroy({isCanceled});
     document.removeEventListener('keydown', this.#escKeyDownHandler);
+    this.#handleDestroy({isCanceled});
   }
 
   setSaving = () => {
@@ -55,7 +56,7 @@ export default class AddPointPresenter {
       this.#addPointComponent.updateElement({
         isDisabled: false,
         isSaving: false,
-        //isDeleting: false,
+        isDeleting: false,
       });
     };
     this.#addPointComponent.shake(resetFormState);
