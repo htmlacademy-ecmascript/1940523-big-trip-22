@@ -84,10 +84,13 @@ export default class PointsPresenter {
     }
     if (!this.points.length && !this.#isCreating) {
       this.#renderEmptyList();
+      this.#addPointButtonPresenter.enabledButton();
       return;
     }
 
-    this.#addPointButtonPresenter.enabledButton();
+    if (!this.#isCreating) {
+      this.#addPointButtonPresenter.enabledButton();
+    }
 
     this.#renderSort();
     this.#renderTripList();
@@ -100,7 +103,9 @@ export default class PointsPresenter {
 
   #clearBoard = ({ resetSortType = false } = {}) => {
     this.#clearPoints();
-    this.#sortPresenter.destroy();
+    if (this.#sortPresenter) {
+      this.#sortPresenter.destroy();
+    }
     remove(this.#emptyListComponent);
     if (resetSortType) {
       this.#currentSortType = SortTypes.DAY;
@@ -127,6 +132,12 @@ export default class PointsPresenter {
         this.#isLoading = false;
         remove(this.#loaderComponent);
         this.#renderBoard();
+        break;
+
+      case UpdateType.ERROR:
+        this.#isLoading = false;
+        remove(this.#loaderComponent);
+        this.#renderErrorMessage();
         break;
     }
   };
@@ -163,7 +174,6 @@ export default class PointsPresenter {
         this.#pointsPresenter.get(update.id).setSaving();
         try {
           await this.#eventPointsModel.update(updateType, update);
-          this.#pointsPresenter.get(update.id).replaceEditFormToPoint();
         } catch (error) {
           this.#pointsPresenter.get(update.id).setAborting();
         }
@@ -199,7 +209,15 @@ export default class PointsPresenter {
 
   #renderEmptyList() {
     this.#emptyListComponent = new NoPointView({
-      filterType: this.#filterModel.get()
+      filterType: this.#filterModel.get(),
+    });
+    render(this.#emptyListComponent, this.#tripContainer);
+  }
+
+  #renderErrorMessage() {
+    this.#emptyListComponent = new NoPointView({
+      filterType: this.#filterModel.get(),
+      isServerError: true,
     });
     render(this.#emptyListComponent, this.#tripContainer);
   }

@@ -38,9 +38,9 @@ export default class AddPointPresenter {
       return;
     }
 
-    this.#handleDestroy({isCanceled});
     remove(this.#addPointComponent);
     this.#addPointComponent = null;
+    this.#handleDestroy({isCanceled});
     document.removeEventListener('keydown', this.#escKeyDownHandler);
   }
 
