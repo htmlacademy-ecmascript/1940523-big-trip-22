@@ -5,17 +5,26 @@ export default class TripInfoPresenter {
   #eventPointsModel = null;
   #tripInfoComponent = null;
   #tripInfoContainer = null;
-  #eventPoints = null;
+  #destinationModel = null;
+  #offersModel = null;
 
-  constructor({ tripInfoContainer, eventPointsModel }) {
+  constructor({ tripInfoContainer, eventPointsModel, destinationModel, offersModel }) {
     this.#tripInfoContainer = tripInfoContainer;
     this.#eventPointsModel = eventPointsModel;
-    this.#eventPoints = this.#eventPointsModel.get();
+    this.#destinationModel = destinationModel;
+    this.#offersModel = offersModel;
+
+    this.#eventPointsModel.addObserver(this.#modelEventHandler);
   }
 
   init() {
     const prevTripInfoComponent = this.#tripInfoComponent;
-    this.#tripInfoComponent = new TripInfoView();
+    this.#tripInfoComponent = new TripInfoView({
+      destinations: this.#destinationModel.get(),
+      points: this.#eventPointsModel.get(),
+      offers: this.#offersModel.get(),
+    });
+
     if (!prevTripInfoComponent) {
       render(this.#tripInfoComponent, this.#tripInfoContainer, RenderPosition.AFTERBEGIN);
       return;
@@ -24,6 +33,10 @@ export default class TripInfoPresenter {
     replace(this.#tripInfoComponent, prevTripInfoComponent);
     remove(prevTripInfoComponent);
 
-    render(this.#tripInfoComponent, this.#tripInfoContainer);
+    render(this.#tripInfoComponent, this.#tripInfoContainer, RenderPosition.AFTERBEGIN);
   }
+
+  #modelEventHandler = () => {
+    this.init();
+  };
 }

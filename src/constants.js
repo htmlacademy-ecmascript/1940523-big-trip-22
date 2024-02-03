@@ -94,3 +94,5 @@ export const POINT_EMPTY = {
   offers: [],
   type: EVENT_TYPES[1],
 };
+
+export const DESTINATION_ITEMS_COUNT = 3;

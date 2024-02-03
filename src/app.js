@@ -27,8 +27,9 @@ const filtersModel = new FilterModel();
 
 const tripInfoPresenter = new TripInfoPresenter({
   tripInfoContainer: siteTripMainElement,
-  tripHeaderFilter: siteFiltersElement,
-  eventPointsModel
+  eventPointsModel,
+  destinationModel,
+  offersModel
 });
 
 const filterPresenter = new FilterPresenter({
