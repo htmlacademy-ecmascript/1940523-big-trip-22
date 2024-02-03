@@ -163,6 +163,7 @@ export default class PointsPresenter {
         this.#pointsPresenter.get(update.id).setSaving();
         try {
           await this.#eventPointsModel.update(updateType, update);
+          this.#pointsPresenter.get(update.id).replaceEditFormToPoint();
         } catch (error) {
           this.#pointsPresenter.get(update.id).setAborting();
         }

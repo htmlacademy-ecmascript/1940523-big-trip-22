@@ -1,31 +1,7 @@
 import {calcDuration, isDatesEqual} from './point.js';
-
-export function incrementCounter(startFrom) {
-  let counterStart = startFrom;
-  return function () {
-    return counterStart++;
-  };
-}
-
-//получение рандомного элемента из массива
-export function getRandomArrayElement(items) {
-  return items[Math.floor(Math.random() * items.length)];
-}
-
-//получение рандомного числа
-export function getRandomNumber(maxNumber) {
-  return Math.ceil(Math.random() * maxNumber);
-}
-
-//получение рандомного числа из диапазона
-export function getRandomNumberFromRange (min, max) {
-  return Math.floor(Math.random() * (max - min)) + min;
-}
-
-//получение рандомного булева значения
-export function getRandomBool() {
-  return Math.random() >= 0.5;
-}
+import {sorting} from './sort.js';
+import {DESTINATION_ITEMS_COUNT, SortTypes} from '../constants.js';
+import dayjs from 'dayjs';
 
 export function updateItem(items, update) {
   return items.map((item) => item.id === update.id ? update : item);
@@ -73,3 +49,37 @@ export const adaptToServer = (point) => {
 
   return adaptedPoint;
 };
+
+export const getFullTrip = (points = [], destinations = []) => {
+  const destinationsNames = sorting[SortTypes.DAY]([...points]).map((point) =>
+    destinations.find((destination) => destination.id === point.destination).name
+  );
+
+  return destinationsNames.length <= DESTINATION_ITEMS_COUNT
+    ? destinationsNames.join(' &mdash; ')
+    : `${destinationsNames.at(0)} &mdash; ... &mdash; ${destinationsNames.at(-1)}`;
+};
+
+export const getTripPeriod = (points = []) => {
+  const sortedPoints = sorting[SortTypes.DAY]([...points]);
+
+  return sortedPoints.length
+    ? `${dayjs(sortedPoints.at(0).dateFrom).format('DD MMM')} - ${dayjs(sortedPoints.at(-1).dateTo).format('DD MMM')}`
+    : '';
+};
+
+const getCheckedOffers = (offers, type) => offers.find((offer) => offer.type === type)?.offers;
+
+const getOffersCost = (offerIDs = [], offers = []) => (
+  offerIDs.reduce(
+    (offerCost, id) => offerCost + (offers.find((offer) => offer.id === id)?.price ?? 0),
+    0,
+  )
+);
+
+export const getTripFullCost = (points = [], offers = []) => (
+  points.reduce(
+    (total, point) => total + point.basePrice + getOffersCost(point.offers, getCheckedOffers(offers, point.type)),
+    0,
+  )
+);

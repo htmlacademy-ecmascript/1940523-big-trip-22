@@ -38,13 +38,17 @@ export default class AddPointPresenter {
       return;
     }
 
+    this.#handleDestroy({isCanceled});
     remove(this.#addPointComponent);
     this.#addPointComponent = null;
     document.removeEventListener('keydown', this.#escKeyDownHandler);
-    this.#handleDestroy({isCanceled});
   }
 
   setSaving = () => {
+    if (!this.#addPointComponent) {
+      return;
+    }
+
     this.#addPointComponent.updateElement({
       isDisabled: true,
       isSaving: true
@@ -59,6 +63,7 @@ export default class AddPointPresenter {
         isDeleting: false,
       });
     };
+    document.addEventListener('keydown', this.#escKeyDownHandler);
     this.#addPointComponent.shake(resetFormState);
   };
 
@@ -79,6 +84,6 @@ export default class AddPointPresenter {
       UpdateType.MINOR,
       point
     );
-    // this.destroy({isCanceled: false});
+    document.removeEventListener('keydown', this.#escKeyDownHandler);
   };
 }

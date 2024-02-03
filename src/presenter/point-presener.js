@@ -72,14 +72,14 @@ export default class PointPresenter {
   resetView() {
     if (this.#mode !== MODE.DEFAULT) {
       this.#eventEditPointComponent.reset(this.#point);
-      this.#replaceEditFormToPoint();
+      this.replaceEditFormToPoint();
     }
   }
 
   #escKeyDownHandler = (evt) => {
     if (evt.key === 'Escape') {
       evt.preventDefault();
-      this.#replaceEditFormToPoint();
+      this.replaceEditFormToPoint();
       document.removeEventListener('keydown',this.#escKeyDownHandler);
     }
   };
@@ -88,7 +88,7 @@ export default class PointPresenter {
     this.#handleDataChange(UserAction.DELETE_POINT, UpdateType.MINOR, point);
   };
 
-  #replaceEditFormToPoint = () => {
+  replaceEditFormToPoint = () => {
     this.#eventEditPointComponent.reset(this.#point);
     replace(this.#eventPointComponent, this.#eventEditPointComponent);
     this.#mode = MODE.DEFAULT;
@@ -106,13 +106,13 @@ export default class PointPresenter {
   };
 
   #editPointCloseHandler = () => {
-    this.#replaceEditFormToPoint();
+    this.replaceEditFormToPoint();
     document.removeEventListener('keydown', this.#escKeyDownHandler);
   };
 
   #editPointSubmitHandler = (point) => {
     const currentTypeChange = isMinorChange(point, this.#point) ? UpdateType.MINOR : UpdateType.PATCH;
-    this.#replaceEditFormToPoint();
+
     this.#handleDataChange(
       UserAction.UPDATE_POINT,
       currentTypeChange,
