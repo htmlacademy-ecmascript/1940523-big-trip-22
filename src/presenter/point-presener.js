@@ -118,7 +118,6 @@ export default class PointPresenter {
       currentTypeChange,
       point,
     );
-    document.removeEventListener('keydown', this.#escKeyDownHandler);
   };
 
   #onFavoriteClick = () => {
@@ -140,6 +139,7 @@ export default class PointPresenter {
   setAborting = () => {
     if (this.#mode === MODE.DEFAULT) {
       this.#eventEditPointComponent.shake();
+      this.#eventPointComponent.shake();
       return;
     }
 

@@ -25,9 +25,11 @@ export function isDatesEqual (dateA, dateB) {
 export const calcDuration = (dateFrom, dateTo) => {
   const diff = dayjs(dateTo).diff(dayjs(dateFrom));
   const eventDuration = dayjs.duration(diff);
+  const days = Math.floor(eventDuration.asDays());
+  const formattedDays = days.toString().padStart(2, '0');
 
-  if (eventDuration.days()) {
-    return eventDuration.format('DD[D] HH[H] mm[m]');
+  if (days) {
+    return `${formattedDays}D ${eventDuration.format('HH[H] mm[m]')}`;
   }
 
   if (eventDuration.hours()) {

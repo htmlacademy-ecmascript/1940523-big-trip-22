@@ -11,13 +11,21 @@ function createNoPointsTemplate({massage}) {
 
 export default class NoPointView extends AbstractView {
   #filterType = null;
+  #isServerError = null;
 
-  constructor({filterType}) {
+  constructor({filterType, isServerError = null}) {
     super();
     this.#filterType = filterType;
+    this.#isServerError = isServerError;
   }
 
   get template() {
+    if (this.#isServerError) {
+      return createNoPointsTemplate({
+        massage: EmptyListMessage['ERROR'],
+      });
+    }
+
     return createNoPointsTemplate({
       massage: EmptyListMessage[this.#filterType.toUpperCase()],
     });

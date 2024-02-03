@@ -97,31 +97,31 @@ function createOfferItems(offer, isChecked) {
 }
 
 function createOfferItemsList(offers, checkedOffers) {
-  if (offers.length) {
-    return `<section class="event__section  event__section--offers">
-              <h3 class="event__section-title  event__section-title--offers">Offers</h3>
+  return `<section class="event__section  event__section--offers">
+            <h3 class="event__section-title  event__section-title--offers">Offers</h3>
 
-              <div class="event__available-offers">
+            <div class="event__available-offers">
 
-                 ${offers?.map((offer) => createOfferItems(offer, checkedOffers?.includes(offer.id))).join('')}
+               ${offers?.map((offer) => createOfferItems(offer, checkedOffers?.includes(offer.id))).join('')}
 
-              </div>
-            </section>`;
-  }
+            </div>
+          </section>`;
 }
 
 function createDestinationTemplate (currentDestination) {
-  return `<section class="event__section  event__section--destination">
-            <h3 class="event__section-title  event__section-title--destination">Destination</h3>
-            <p class="event__destination-description">${currentDestination.description}</p>
-          </section>
-          ${currentDestination.pictures ? `
-          <div class="event__photos-container">
-            <div class="event__photos-tape">
-              ${createDestinationPhotosTemplate(currentDestination.pictures)}
-            </div>
-          </div>
-          ` : ''}`;
+  return `${currentDestination.description ?
+    `<section class="event__section  event__section--destination">
+      <h3 class="event__section-title  event__section-title--destination">Destination</h3>
+      <p class="event__destination-description">${currentDestination.description}</p>
+    </section>
+    ` : ''}
+    ${currentDestination.pictures.length ? `
+    <div class="event__photos-container">
+      <div class="event__photos-tape">
+        ${createDestinationPhotosTemplate(currentDestination.pictures)}
+      </div>
+    </div>
+    ` : ''}`;
 }
 
 function createEditFormTemplate({ state, pointDestinations, pointOffers, editorMode}) {
@@ -189,7 +189,7 @@ function createEditFormTemplate({ state, pointDestinations, pointOffers, editorM
           </header>
           <section class="event__details">
 
-            ${createOfferItemsList(currentPointOffers.offers, state.offers)}
+            ${currentPointOffers.offers.length ? createOfferItemsList(currentPointOffers.offers, state.offers) : ''}
 
             ${selectedDestination ? createDestinationTemplate(selectedDestination) : ''}
 
