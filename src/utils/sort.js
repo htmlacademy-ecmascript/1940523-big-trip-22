@@ -1,4 +1,4 @@
-import {SortTypes} from '../constants.js';
+import {SortType} from '../constants.js';
 import dayjs from 'dayjs';
 
 const getPointsByDate = (pointA, pointB) =>
@@ -14,13 +14,13 @@ const getPointsByTime = (pointA, pointB) => {
 const getPointByPrice = (pointA, pointB) => pointB.basePrice - pointA.basePrice;
 
 export const sorting = {
-  [SortTypes.DAY]: (eventPoints) => eventPoints.toSorted(getPointsByDate),
-  [SortTypes.EVENT]: () => {
-    throw new Error(`Sort by ${SortTypes.EVENT} is disabled`);
+  [SortType.DAY]: (eventPoints) => eventPoints.toSorted(getPointsByDate),
+  [SortType.EVENT]: () => {
+    throw new Error(`Sort by ${SortType.EVENT} is disabled`);
   },
-  [SortTypes.TIME]: (eventPoints) => eventPoints.toSorted(getPointsByTime),
-  [SortTypes.PRICE]: (eventPoints) => eventPoints.toSorted(getPointByPrice),
-  [SortTypes.OFFER]: () => {
-    throw new Error(`Sort by ${SortTypes.OFFER} is disabled`);
+  [SortType.TIME]: (eventPoints) => eventPoints.toSorted(getPointsByTime),
+  [SortType.PRICE]: (eventPoints) => eventPoints.toSorted(getPointByPrice),
+  [SortType.OFFER]: () => {
+    throw new Error(`Sort by ${SortType.OFFER} is disabled`);
   },
 };
