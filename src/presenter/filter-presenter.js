@@ -14,8 +14,8 @@ export default class FilterPresenter {
     this.#eventPointsModel = eventPointsModel;
     this.#headerContainer = headerContainer;
     this.#filtersModel = filtersModel;
-    this.#eventPointsModel.addObserver(this.#handleModeChange);
-    this.#filtersModel.addObserver(this.#handleModeChange);
+    this.#eventPointsModel.addObserver(this.#modeChangeHandler);
+    this.#filtersModel.addObserver(this.#modeChangeHandler);
 
     this.#filters = Object.entries(filter).map(
       ([filterType, filterPoints]) => ({
@@ -58,7 +58,7 @@ export default class FilterPresenter {
     this.#filtersModel.set(UpdateType.MAJOR, filterType);
   };
 
-  #handleModeChange = () => {
+  #modeChangeHandler = () => {
     this.init();
   };
 }

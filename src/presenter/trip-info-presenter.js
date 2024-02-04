@@ -14,7 +14,7 @@ export default class TripInfoPresenter {
     this.#destinationModel = destinationModel;
     this.#offersModel = offersModel;
 
-    this.#eventPointsModel.addObserver(this.#modelEventHandler);
+    this.#eventPointsModel.addObserver(this.#modelEventChangeHandler);
   }
 
   init() {
@@ -36,7 +36,7 @@ export default class TripInfoPresenter {
     render(this.#tripInfoComponent, this.#tripInfoContainer, RenderPosition.AFTERBEGIN);
   }
 
-  #modelEventHandler = () => {
+  #modelEventChangeHandler = () => {
     this.init();
   };
 }

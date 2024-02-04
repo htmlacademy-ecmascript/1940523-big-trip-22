@@ -230,7 +230,7 @@ export default class EditPointView extends AbstractStatefulView {
     });
   }
 
-  #saveEditForm = (evt) => {
+  #editFormSaveHandler = (evt) => {
     evt.preventDefault();
     this.#onSaveEdit(EditPointView.parseStateToPoint(this._state));
   };
@@ -261,9 +261,9 @@ export default class EditPointView extends AbstractStatefulView {
     if (this.#editorMode === EditType.CREATING) {
       this.element.querySelector('.event__reset-btn').addEventListener('click', this.#onCloseClick);
     }
-    this.element.querySelector('.event.event--edit').addEventListener('submit', this.#saveEditForm);
+    this.element.querySelector('.event.event--edit').addEventListener('submit', this.#editFormSaveHandler);
     this.element.querySelector('.event__type-group').addEventListener('change', this.#typeChangeHandler);
-    this.element.querySelector('.event__input--destination').addEventListener('change', this.#destinationOptionHandler);
+    this.element.querySelector('.event__input--destination').addEventListener('change', this.#destinationOptionChangeHandler);
     this.element.querySelector('.event__input--price').addEventListener('change', this.#priceChangeHandler);
     this.element.querySelector('.event__available-offers')?.addEventListener('change', this.#offersChangeHandler);
 
@@ -299,7 +299,7 @@ export default class EditPointView extends AbstractStatefulView {
     });
   };
 
-  #destinationOptionHandler = (evt) => {
+  #destinationOptionChangeHandler = (evt) => {
     const selectedDestination = this.#destinations.find((item) => item.name === evt.target.value);
     const selectedDestinationId = selectedDestination ? selectedDestination.id : null;
     this.updateElement({
@@ -325,19 +325,19 @@ export default class EditPointView extends AbstractStatefulView {
     this.#datePickerFrom = flatpickr(startDateNode, {
       ...flatPickerConfig,
       defaultDate: this._state.dateFrom,
-      onChange: this.#closeStartDateHandler,
+      onChange: this.#closeStartDateChangeHandler,
       maxDate: this._state.dateTo,
     });
 
     this.#datePickerTo = flatpickr(endDateNode, {
       ...flatPickerConfig,
       defaultDate: this._state.dateTo,
-      onChange: this.#closeEndDateHandler,
+      onChange: this.#closeEndDateChangeHandler,
       minDate: this._state.dateFrom,
     });
   };
 
-  #closeStartDateHandler = ([selectedDate]) => {
+  #closeStartDateChangeHandler = ([selectedDate]) => {
     this._setState({
       ...this._state,
       dateFrom: selectedDate
@@ -346,7 +346,7 @@ export default class EditPointView extends AbstractStatefulView {
     this.#datePickerTo.set('minDate', this._state.dateFrom);
   };
 
-  #closeEndDateHandler = ([selectedDate]) => {
+  #closeEndDateChangeHandler = ([selectedDate]) => {
     this._setState({
       ...this._state,
       dateTo: selectedDate

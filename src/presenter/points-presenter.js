@@ -16,7 +16,6 @@ export default class PointsPresenter {
   #eventPointsModel = null;
   #offersModel = null;
   #filterModel = null;
-  #filterType = FilterType.EVERYTHING;
   #currentSortType = SortTypes.DAY;
   #tripListComponent = new TripListView();
   #pointsPresenter = new Map();
@@ -41,11 +40,11 @@ export default class PointsPresenter {
       container: this.#tripListComponent.element,
       destinationModel: this.#destinationModel,
       offersModel: this.#offersModel,
-      onDataChange: this.#handleViewAction,
+      onDataChange: this.#viewActionChangeHandler,
       onDestroy: this.#addPointDestroyHandler,
     });
-    this.#eventPointsModel.addObserver(this.#modelEventHandler);
-    this.#filterModel.addObserver(this.#modelEventHandler);
+    this.#eventPointsModel.addObserver(this.#modelEventChangeHandler);
+    this.#filterModel.addObserver(this.#modelEventChangeHandler);
   }
 
   get points() {
@@ -112,7 +111,7 @@ export default class PointsPresenter {
     }
   };
 
-  #modelEventHandler = (updateType, data) => {
+  #modelEventChangeHandler = (updateType, data) => {
     switch (updateType) {
       case UpdateType.PATCH:
         this.#pointsPresenter.get(data?.id)?.init(data);
@@ -167,7 +166,7 @@ export default class PointsPresenter {
     this.#renderEventPoints();
   };
 
-  #handleViewAction = async (actionType, updateType, update) => {
+  #viewActionChangeHandler = async (actionType, updateType, update) => {
     this.#uiBlocker.block();
     switch (actionType) {
       case UserAction.UPDATE_POINT:
@@ -233,7 +232,7 @@ export default class PointsPresenter {
       pointListContainer: this.#tripListComponent.element,
       destinationModel: this.#destinationModel,
       offersModel: this.#offersModel,
-      onPointChange: this.#handleViewAction,
+      onPointChange: this.#viewActionChangeHandler,
       onModeChange: this.#handleModeChange
     });
 
