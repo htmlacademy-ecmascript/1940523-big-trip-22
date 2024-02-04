@@ -1,3 +1,4 @@
+import he from 'he';
 import AbstractStatefulView from '../framework/view/abstract-stateful-view.js';
 import {EditType, EVENT_TYPES, POINT_EMPTY} from '../constants.js';
 import {capitalizeFirstLetter } from '../utils/common.js';
@@ -7,7 +8,7 @@ import 'flatpickr/dist/flatpickr.min.css';
 function createDestinationOptionTemplate(destinations) {
   return destinations.map((destination) => (
     `
-      <option value="${destination}"></option>
+      <option value="${he.encode(destination)}"></option>
     `
   )).join('');
 }
@@ -87,9 +88,9 @@ function createOfferItems(offer, isChecked) {
   const checked = isChecked ? 'checked' : '';
 
   return `<div class="event__offer-selector">
-            <input class="event__offer-checkbox  visually-hidden" id="event-offer-${title}-${id}" type="checkbox" name="event-offer-${title}" data-id="${id}" ${checked}>
-            <label class="event__offer-label" for="event-offer-${title}-${id}">
-              <span class="event__offer-title">${title}</span>
+            <input class="event__offer-checkbox  visually-hidden" id="event-offer-${he.encode(title)}-${id}" type="checkbox" name="event-offer-${he.encode(title)}" data-id="${id}" ${checked}>
+            <label class="event__offer-label" for="event-offer-${he.encode(title)}-${id}">
+              <span class="event__offer-title">${he.encode(title)}</span>
               &plus;&euro;&nbsp;
               <span class="event__offer-price">${price}</span>
             </label>
@@ -112,7 +113,7 @@ function createDestinationTemplate (currentDestination) {
   return `${currentDestination.description ?
     `<section class="event__section  event__section--destination">
       <h3 class="event__section-title  event__section-title--destination">Destination</h3>
-      <p class="event__destination-description">${currentDestination.description}</p>
+      <p class="event__destination-description">${he.encode(currentDestination.description)}</p>
     </section>
     ` : ''}
     ${currentDestination.pictures.length ? `
@@ -159,7 +160,7 @@ function createEditFormTemplate({ state, pointDestinations, pointOffers, editorM
               <input class="event__input  event__input--destination" id="event-destination-${id}"
               type="text"
               name="event-destination"
-              value="${selectedDestinationName}"
+              value="${he.encode(selectedDestinationName)}"
               list="destination-list-1">
               <datalist id="destination-list-1">
 

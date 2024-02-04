@@ -1,6 +1,6 @@
 import {calcDuration, isDatesEqual} from './point.js';
 import {sorting} from './sort.js';
-import {DESTINATION_ITEMS_COUNT, SortTypes} from '../constants.js';
+import {DESTINATION_ITEMS_COUNT, SortType} from '../constants.js';
 import dayjs from 'dayjs';
 
 export function updateItem(items, update) {
@@ -51,7 +51,7 @@ export const adaptToServer = (point) => {
 };
 
 export const getFullTrip = (points = [], destinations = []) => {
-  const destinationsNames = sorting[SortTypes.DAY]([...points]).map((point) =>
+  const destinationsNames = sorting[SortType.DAY]([...points]).map((point) =>
     destinations.find((destination) => destination.id === point.destination).name
   );
 
@@ -61,7 +61,7 @@ export const getFullTrip = (points = [], destinations = []) => {
 };
 
 export const getTripPeriod = (points = []) => {
-  const sortedPoints = sorting[SortTypes.DAY]([...points]);
+  const sortedPoints = sorting[SortType.DAY]([...points]);
 
   return sortedPoints.length
     ? `${dayjs(sortedPoints.at(0).dateFrom).format('DD MMM')} - ${dayjs(sortedPoints.at(-1).dateTo).format('DD MMM')}`

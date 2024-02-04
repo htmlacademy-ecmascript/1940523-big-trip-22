@@ -1,6 +1,6 @@
 import {remove, render} from '../framework/render.js';
 import TripListView from '../view/trip-list-view.js';
-import {FilterType, SortTypes, TimeLimit, UpdateType, UserAction} from '../constants.js';
+import {FilterType, SortType, TimeLimit, UpdateType, UserAction} from '../constants.js';
 import NoPointView from '../view/empty-points-view.js';
 import PointPresenter from './point-presener.js';
 import SortPresenter from './sort-presener.js';
@@ -16,7 +16,7 @@ export default class PointsPresenter {
   #eventPointsModel = null;
   #offersModel = null;
   #filterModel = null;
-  #currentSortType = SortTypes.DAY;
+  #currentSortType = SortType.DAY;
   #tripListComponent = new TripListView();
   #pointsPresenter = new Map();
   #addPointPresenter = null;
@@ -62,7 +62,7 @@ export default class PointsPresenter {
     this.#isCreating = true;
     this.#addPointButtonPresenter.disabledButton();
     this.#filterModel.set(UpdateType.MAJOR, FilterType.EVERYTHING);
-    this.#currentSortType = SortTypes.DAY;
+    this.#currentSortType = SortType.DAY;
     this.#addPointPresenter.init();
   };
 
@@ -107,7 +107,7 @@ export default class PointsPresenter {
     }
     remove(this.#emptyListComponent);
     if (resetSortType) {
-      this.#currentSortType = SortTypes.DAY;
+      this.#currentSortType = SortType.DAY;
     }
   };
 

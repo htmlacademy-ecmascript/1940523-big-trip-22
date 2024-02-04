@@ -1,7 +1,7 @@
 import TripPointView from '../view/trip-point-view.js';
 import EditPointView from '../view/edit-point-view.js';
 import {remove, render, replace} from '../framework/render.js';
-import {EditType, MODE, UpdateType, UserAction} from '../constants.js';
+import {EditType, Mode, UpdateType, UserAction} from '../constants.js';
 import {isMinorChange} from '../utils/common.js';
 
 export default class PointPresenter {
@@ -12,7 +12,7 @@ export default class PointPresenter {
   #offersModel = null;
   #handleDataChange = null;
   #pointListContainer = null;
-  #mode = MODE.DEFAULT;
+  #mode = Mode.DEFAULT;
   #handleModeChange = null;
 
   constructor({pointListContainer, destinationModel, offersModel, onPointChange, onModeChange}) {
@@ -52,12 +52,13 @@ export default class PointPresenter {
       return;
     }
 
-    if (this.#mode === MODE.DEFAULT) {
+    if (this.#mode === Mode.DEFAULT) {
       replace(this.#eventPointComponent, preventEventPointComponent);
     }
 
-    if (this.#mode === MODE.EDITING) {
-      replace(this.#eventEditPointComponent, preventEventEditPointComponent);
+    if (this.#mode === Mode.EDITING) {
+      replace(this.#eventPointComponent, preventEventEditPointComponent);
+      this.#mode = Mode.DEFAULT;
     }
 
     remove(preventEventPointComponent);
@@ -70,7 +71,7 @@ export default class PointPresenter {
   }
 
   resetView() {
-    if (this.#mode !== MODE.DEFAULT) {
+    if (this.#mode !== Mode.DEFAULT) {
       this.#eventEditPointComponent.reset(this.#point);
       this.replaceEditFormToPoint();
     }
@@ -91,13 +92,13 @@ export default class PointPresenter {
   replaceEditFormToPoint = () => {
     this.#eventEditPointComponent.reset(this.#point);
     replace(this.#eventPointComponent, this.#eventEditPointComponent);
-    this.#mode = MODE.DEFAULT;
+    this.#mode = Mode.DEFAULT;
   };
 
   #replacePointToEditForm = () => {
     replace(this.#eventEditPointComponent, this.#eventPointComponent);
     this.#handleModeChange();
-    this.#mode = MODE.EDITING;
+    this.#mode = Mode.EDITING;
   };
 
   #editPointClickHandler = () => {
@@ -128,7 +129,7 @@ export default class PointPresenter {
   };
 
   setSaving = () => {
-    if (this.#mode === MODE.EDITING) {
+    if (this.#mode === Mode.EDITING) {
       this.#eventEditPointComponent.updateElement({
         isDisabled: true,
         isSaving: true
@@ -137,13 +138,13 @@ export default class PointPresenter {
   };
 
   setAborting = () => {
-    if (this.#mode === MODE.DEFAULT) {
+    if (this.#mode === Mode.DEFAULT) {
       this.#eventEditPointComponent.shake();
       this.#eventPointComponent.shake();
       return;
     }
 
-    if (this.#mode === MODE.EDITING) {
+    if (this.#mode === Mode.EDITING) {
       const resetFormState = () => {
         this.#eventEditPointComponent.updateElement({
           isDisabled: false,
@@ -157,7 +158,7 @@ export default class PointPresenter {
   };
 
   setRemove = () => {
-    if (this.#mode === MODE.EDITING) {
+    if (this.#mode === Mode.EDITING) {
       this.#eventEditPointComponent.updateElement({
         isDisabled: true,
         isDeleting: true,
