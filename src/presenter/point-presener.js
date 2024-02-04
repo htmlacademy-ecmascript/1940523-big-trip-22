@@ -33,15 +33,15 @@ export default class PointPresenter {
       destination: this.#destinationModel.getById(point.destination),
       eventPoint: this.#point,
       offers: this.#offersModel.getByType(point.type),
-      onEditClick: this.#editPointHandler,
-      onFavoriteClick: this.#onFavoriteClick
+      onEditClick: this.#editPointClickHandler,
+      onFavoriteClick: this.#onFavoriteClickHandler
     });
 
     this.#eventEditPointComponent = new EditPointView({
       eventPoint: this.#point,
       destinations: this.#destinationModel.get(),
       pointOffers: this.#offersModel.get(),
-      onCloseClick: this.#editPointCloseHandler,
+      onCloseClick: this.#editPointCloseClickHandler,
       onSaveEdit: this.#editPointSubmitHandler,
       onDeleteClick: this.#deleteClickHandler,
       editorMode: EditType.EDITING,
@@ -100,12 +100,12 @@ export default class PointPresenter {
     this.#mode = MODE.EDITING;
   };
 
-  #editPointHandler = () => {
+  #editPointClickHandler = () => {
     this.#replacePointToEditForm();
     document.addEventListener('keydown', this.#escKeyDownHandler);
   };
 
-  #editPointCloseHandler = () => {
+  #editPointCloseClickHandler = () => {
     this.replaceEditFormToPoint();
     document.removeEventListener('keydown', this.#escKeyDownHandler);
   };
@@ -120,7 +120,7 @@ export default class PointPresenter {
     );
   };
 
-  #onFavoriteClick = () => {
+  #onFavoriteClickHandler = () => {
     this.#handleDataChange(UserAction.UPDATE_POINT, UpdateType.PATCH, {
       ...this.#point,
       isFavorite: !this.#point.isFavorite
